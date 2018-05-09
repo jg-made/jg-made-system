@@ -1,5 +1,6 @@
 source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
+export HACIENDA_SCREEN_NAME=hacienda_dkcub;
 
 alias hdb='docker-compose exec hacienda psql --username=hacienda --host=db';
 
@@ -32,16 +33,16 @@ echo 'run-contexts -s /opt/hacienda/hacienda/tests/integration/$1' > /test_scrip
 alias hit=hit;
 
 hkill() {
-    if (screen -ls | grep -q hacienda_dkcub)
+    if (screen -ls | grep -q $HACIENDA_SCREEN_NAME)
     then
-      echo "quitting old hacienda_dkcub";
-      screen -S hacienda_dkcub -X -p 0 stuff $'\003';
-      while (screen -ls | grep -q hacienda_dkcub)
+      echo "quitting old $HACIENDA_SCREEN_NAME";
+      screen -S $HACIENDA_SCREEN_NAME -X -p 0 stuff $'\003';
+      while (screen -ls | grep -q $HACIENDA_SCREEN_NAME)
       do
         sleep 5;
-        echo "still quitting old hacienda_dkcub";
+        echo "still quitting old $HACIENDA_SCREEN_NAME";
       done
-      screen -S hacienda_dkcub -X quit;
+      screen -S $HACIENDA_SCREEN_NAME -X quit;
     fi
 }
 alias hkill=hkill;
@@ -50,8 +51,8 @@ hrestart() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
     hkill;
-    echo "starting new hacienda_dkcub";
-    screen -S hacienda_dkcub -d -m bash -c 'docker-compose up --build; exit';
+    echo "starting new $HACIENDA_SCREEN_NAME";
+    screen -S $HACIENDA_SCREEN_NAME -d -m bash -c 'docker-compose up --build; exit';
     cd $current_dir;
 }
 alias hrestart=hrestart;
