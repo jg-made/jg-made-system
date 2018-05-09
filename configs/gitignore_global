@@ -1,0 +1,17 @@
+.iex.exs
+.tool-versions/
+.projectile
+.gitignore
+.agignore
+.gc_commit_message
+.#*
+.DS_Store
+
+node_modules/
+
+__pycache__/
+.python-version
+*.pyc
+geckodriver.log
+
+.env
