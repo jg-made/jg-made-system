@@ -7,7 +7,9 @@
 		"node" : {},
 		"requirejs" : {},
 		"node_resolve" : {},
-        "es_modules": {}
+        "es_modules": {},
+		"jsx" : {},
+        "jest": {}
     }
 }
 
