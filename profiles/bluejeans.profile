@@ -6,7 +6,7 @@ bluejeans() {
     echo "bluejeans already running...";
   else
     echo "starting bluejeans...";
-    screen -S $BLUEJEANS_SCREEN_NAME -d -m /opt/bluejeans/bluejeans-bin > $BLUEJEANS_LOG_DIR/output.log 2>$BLUEJEANS_LOG_DIR/error.log
+    screen -S $BLUEJEANS_SCREEN_NAME -d -m /opt/bluejeans/bluejeans-bin >> $BLUEJEANS_LOG_DIR/output.log 2>>$BLUEJEANS_LOG_DIR/error.log
   fi
 }
 alias bluejeans=bluejeans
