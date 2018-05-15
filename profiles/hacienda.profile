@@ -1,4 +1,5 @@
 source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
+
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_SCREEN_NAME=hacienda_dkcub;
 
@@ -56,3 +57,8 @@ hrestart() {
     cd $current_dir;
 }
 alias hrestart=hrestart;
+
+hdb_test() {
+    PGPASSWORD=$HACIENDA_PGPASSWORD_TEST psql -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda
+}
+alias hdb_test=hdb_test;
