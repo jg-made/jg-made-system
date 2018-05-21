@@ -3,7 +3,8 @@ source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_SCREEN_NAME=hacienda_dkcub;
 
-alias hdb='docker-compose exec hacienda psql --username=hacienda --host=db';
+#alias hdb_local='docker-compose exec hacienda psql --username=hacienda --host=db';
+alias hdb_local='PGPASSWORD=$HACIENDA_DB_PASSWORD pgcli -p 5432 -h 127.0.0.1 -U hacienda hacienda'
 
 hut_docker() {
     docker-compose exec hacienda sh -c "\
@@ -83,6 +84,8 @@ hrestart() {
 alias hrestart=hrestart;
 
 hdb_test() {
-    PGPASSWORD=$HACIENDA_PGPASSWORD_TEST psql -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda
+    PGPASSWORD=$HACIENDA_PGPASSWORD_TEST pgcli -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda
 }
 alias hdb_test=hdb_test;
+
+
