@@ -1,7 +1,7 @@
 export MADE_VPN_DIR=$JG_MADE_SYSTEM/auths/vpn;
 
 madevpn_secretkey() {
-    $MADE_VPN_DIR/secret_key_vpn;
+    watch -n1 $MADE_VPN_DIR/secret_key_vpn;
 }
 alias madevpn_secretkey=madevpn_secretkey;
 
