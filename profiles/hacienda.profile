@@ -87,5 +87,3 @@ hdb_test() {
     PGPASSWORD=$HACIENDA_PGPASSWORD_TEST pgcli -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda
 }
 alias hdb_test=hdb_test;
-
-
