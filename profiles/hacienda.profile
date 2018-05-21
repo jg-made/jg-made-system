@@ -77,7 +77,7 @@ hrestart() {
     cd $HACIENDA_PROJECT_DIR;
     hkill;
     echo "starting new $HACIENDA_SCREEN_NAME";
-    screen -S $HACIENDA_SCREEN_NAME -d -m bash -c 'docker-compose up --build; exit';
+    screen -S $HACIENDA_SCREEN_NAME -d -m bash -c 'docker-compose up --build > $JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME/$(date +%F_%T).log; exit';
     cd $current_dir;
 }
 alias hrestart=hrestart;
