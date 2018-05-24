@@ -1,3 +1,4 @@
 !.gitignore
 auths/
 logs/
+!.hacienda-ninja.png
