@@ -52,9 +52,9 @@ hrun_tests_on_container()  {
     docker-compose exec hacienda sh -i --init-file $1;
 }
 
-alias hut_local='hrun_in_project_dir run-contexts -s src/hacienda/tests/$1';
-alias hat_local='hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1';
-alias hit_local='hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1';
+hut_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/$1 }; alias hut_local=hut_local;
+hat_local(){ hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1 }; alias hat_local=hat_local;
+hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1 }; alias hit_local=hit_local;
 alias hut_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/unit_tests';
 alias hat_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/acceptance_tests';
 alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/integration_tests';
