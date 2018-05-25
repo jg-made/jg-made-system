@@ -41,6 +41,8 @@ madevpn_start() {
 
         echo $base_password > $JG_MADE_SYSTEM/auths/madevpn/.secret_base_password;
 
+        unset base_password
+
         echo $(cat $JG_MADE_SYSTEM/auths/madevpn/.secret_base_password $JG_MADE_SYSTEM/auths/madevpn/.secret_key) \
         | tr -d " " > $JG_MADE_SYSTEM/auths/madevpn/.secret_password
 
