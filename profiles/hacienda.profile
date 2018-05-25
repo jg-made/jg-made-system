@@ -9,7 +9,6 @@ export HACIENDA_SCREEN_NAME=hacienda_dkcub;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
-    echo "$@";
     "$@";
     cd $current_dir;
 }
