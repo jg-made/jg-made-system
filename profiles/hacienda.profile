@@ -1,5 +1,5 @@
 # Ensure DB passwords not known globally
-source $JG_MADE_SYSTEM/auths/hacienda/hacienda_unset.profile;
+source $JG_MADE_SYSTEM/auths/unset/hacienda.profile;
 
 # Export some useful vars
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
@@ -31,7 +31,7 @@ hdb_with_auth() {
     esac
     shift 1
     PGPASSWORD=$password "$@";
-    source $JG_MADE_SYSTEM/auths/hacienda/hacienda_unset.profile;
+    source $JG_MADE_SYSTEM/auths/unset/hacienda.profile;
 }
 
 # DB ACCESS ALIASES
