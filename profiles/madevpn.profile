@@ -1,3 +1,5 @@
+source $JG_MADE_SYSTEM/auths/madevpn/madevpn_unset.profile;
+
 export MADEVPN_SCREEN_NAME=madevpn;
 
 madevpn_kill() {
@@ -24,13 +26,13 @@ madevpn_start() {
 
         read -s base_password
 
-        echo "thanks, now please wait, waiting for secret key to change..."
+        echo "thanks, now please wait up to 30 seconds for secret key to change..."
 
         source $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile
 
         screen -S madevpn_secretkey -d -m watch -g -n1 'oathtool --totp -b $MADEVPN_GOOGLE_CODE | tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key';
 
-        unset MADEVPN_GOOGLE_CODE;
+        source $JG_MADE_SYSTEM/auths/madevpn/madevpn_unset.profile;
 
         while (screen -ls | grep -q madevpn_secretkey)
         do
@@ -42,7 +44,11 @@ madevpn_start() {
         echo $(cat $JG_MADE_SYSTEM/auths/madevpn/.secret_base_password $JG_MADE_SYSTEM/auths/madevpn/.secret_key) \
         | tr -d " " > $JG_MADE_SYSTEM/auths/madevpn/.secret_password
 
-        echo 'james.gough' > $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name;
+        source $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile
+
+        echo $MADEVPN_USER_NAME > $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name;
+
+        source $JG_MADE_SYSTEM/auths/madevpn/madevpn_unset.profile;
 
         cat $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name $JG_MADE_SYSTEM/auths/madevpn/.secret_password > $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
 
@@ -56,7 +62,7 @@ madevpn_start() {
         sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
 
         # the vpn needs a little time to connect before we delete the secret auth file
-        sleep 2
+        sleep 5
 
         rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
 
