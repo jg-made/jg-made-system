@@ -1,6 +1,3 @@
-# Source the DB passwords
-source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
-
 # Export some useful vars
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_SCREEN_NAME=hacienda_dkcub;
@@ -60,6 +57,24 @@ alias hat_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/acce
 alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/integration_tests';
 
 # ACCESSING DB
-alias hdb_local='PGPASSWORD=$HACIENDA_DB_PASSWORD pgcli -p 5432 -h 127.0.0.1 -U hacienda hacienda';
-alias hdb_docker='PGPASSWORD=$HACIENDA_DB_PASSWORD hrun_in_project_dir docker-compose exec hacienda psql --username=hacienda --host=db';
-alias hdb_test='PGPASSWORD=$HACIENDA_PGPASSWORD_TEST pgcli -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda';
+hdb_with_auth() {
+    # Source the DB passwords
+    source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
+    case $1 in
+    "local" | "docker")
+        password=$HACIENDA_PGPASSWORD_LOCAL
+        ;;
+    "test")
+        password=$HACIENDA_PGPASSWORD_TEST
+        ;;
+    *)
+        password=''
+        ;;
+    esac
+    shift 1
+    PGPASSWORD=$password "$@";
+    source $JG_MADE_SYSTEM/auths/hacienda/hacienda_unset.profile;
+}
+alias hdb_local='hdb_with_auth local pgcli -p 5432 -h 127.0.0.1 -U hacienda hacienda';
+alias hdb_docker='hdb_with_auth docker hrun_in_project_dir docker-compose exec hacienda psql --username=hacienda --host=db';
+alias hdb_test='hdb_with_auth test pgcli -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda';
