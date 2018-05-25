@@ -63,7 +63,7 @@ hrestart_heavy() {
 }
 alias hrestart_heavy='hrun_in_project_dir hrestart_heavy';
 
-# (RE)STARTING APP QUICKLY
+# RESTARTING APP QUICKLY
 alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
 
 # RUNNING TESTS ON CONTAINER USING FILES CREATED ON THE CONTAINER
@@ -80,10 +80,15 @@ hrun_tests_on_container()  {
     docker-compose exec hacienda sh -i --init-file $1;
 }
 
+# RUNNING TESTS LOCALLY
+hut_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/$1 };
+hat_local(){ hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1 };
+hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1 };
+
 # RUNNING TESTS ALIASES
-hut_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/$1 }; alias hut_local=hut_local;
-hat_local(){ hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1 }; alias hat_local=hat_local;
-hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1 }; alias hit_local=hit_local;
+alias hut_local=hut_local;
+alias hat_local=hat_local;
+alias hit_local=hit_local;
 alias hut_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/unit_tests';
 alias hat_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/acceptance_tests';
 alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/integration_tests';
