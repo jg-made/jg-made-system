@@ -1,3 +1,6 @@
+# Ensure DB passwords not known globally
+source $JG_MADE_SYSTEM/auths/hacienda/hacienda_unset.profile;
+
 # Export some useful vars
 export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_SCREEN_NAME=hacienda_dkcub;
