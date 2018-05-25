@@ -99,10 +99,10 @@ source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/hacienda.profile
+source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
 source $JG_MADE_SYSTEM/profiles/postman.profile
 source $JG_MADE_SYSTEM/profiles/pyenv.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
 source $JG_MADE_SYSTEM/profiles/zplug.profile
 
-source $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile;
