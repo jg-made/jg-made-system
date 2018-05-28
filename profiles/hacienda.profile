@@ -76,6 +76,7 @@ hrun_tests_on_container()  {
         echo 'run-contexts -s /opt/hacienda/hacienda/tests/integration/$2' > /test_scripts/integration_tests;
         chmod +x /test_scripts/integration_tests;
 ";
+    docker exec -d hacienda_app pip install ipdb;
     docker-compose exec hacienda sh -i --init-file $1;
 }
 
