@@ -70,9 +70,14 @@ madevpn_start() {
 
         if (sudo screen -ls | grep -q $MADEVPN_SCREEN_NAME)
         then
-            echo "madevpn successfully started :)";
+            if [ $(curl --retry-max-time 10 -m 10 -s -o /dev/null -w "%{http_code}" https://portus.made.com) -eq 200 ]
+            then
+                echo "madevpn successfully started :)";
+            else
+                echo "madevpn FAILED to start (screen is running but could not reach portus)";
+            fi
         else
-            echo "madevpn FAILED to start";
+            echo "madevpn FAILED to start (screen is not running)";
         fi
     fi
 }
