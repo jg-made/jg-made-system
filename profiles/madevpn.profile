@@ -2,6 +2,16 @@ source $JG_MADE_SYSTEM/auths/unset/madevpn.profile;
 
 export MADEVPN_SCREEN_NAME=madevpn;
 
+madevpn_check() {
+    if [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" https://portus.made.com) -eq 200 ]
+    then
+        echo "madevpn is up and running :)";
+    else
+        echo "madevpn is down";
+    fi
+}
+alias madevpn_check=madevpn_check
+
 madevpn_kill() {
     if (sudo screen -ls | grep -q $MADEVPN_SCREEN_NAME)
     then
@@ -70,12 +80,7 @@ madevpn_start() {
 
         if (sudo screen -ls | grep -q $MADEVPN_SCREEN_NAME)
         then
-            if [ $(curl --retry-max-time 10 -m 10 -s -o /dev/null -w "%{http_code}" https://portus.made.com) -eq 200 ]
-            then
-                echo "madevpn successfully started :)";
-            else
-                echo "madevpn FAILED to start (screen is running but could not reach portus)";
-            fi
+            madevpn_check
         else
             echo "madevpn FAILED to start (screen is not running)";
         fi
