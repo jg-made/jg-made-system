@@ -2,8 +2,9 @@
 source $JG_MADE_SYSTEM/auths/unset/hacienda.profile;
 
 # Export some useful vars
-export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_SCREEN_NAME=hacienda_dkcub;
+export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
+export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 
 # Allow later functions to be run from any directory
 hrun_in_project_dir() {
@@ -56,9 +57,12 @@ alias hkill=hkill;
 
 # (RE)STARTING APP THOROUGHLY
 hrestart_heavy() {
-    hkill;
     echo "restarting $HACIENDA_SCREEN_NAME";
-    hdb_with_auth local screen -S $HACIENDA_SCREEN_NAME -d -m bash -c 'docker-compose up --build > $JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME/$(date +%F_%T).log; exit';
+    log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
+    dkcub_cmd="docker-compose up --build > $log_filepath; exit";
+    hkill;
+    hdb_with_auth local screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
+    ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
 }
 alias hrestart_heavy='hrun_in_project_dir hrestart_heavy';
 
@@ -93,3 +97,5 @@ alias hut_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/unit
 alias hat_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/acceptance_tests';
 alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/integration_tests';
 
+# QUICK ACCESS LATEST LOG OF LATEST LOCAL RUN
+alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
