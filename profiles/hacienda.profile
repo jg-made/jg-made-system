@@ -99,3 +99,6 @@ alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/inte
 
 # QUICK ACCESS LATEST LOG OF LATEST LOCAL RUN
 alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
+
+# VISUALIZE THE SCHEMA AND RELATIONS
+alias hvizpdf="hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
