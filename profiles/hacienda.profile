@@ -90,32 +90,13 @@ hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/
 
 # INSTALL IPDB ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
-alias hipdb_docker="docker exec hacienda_app sh -c '\
+alias hipdb_docker="docker exec --privileged hacienda_app sh -c '\
     apk del postgresql-dev;
-    apk add openssl-dev;
-    pip3 uninstall pyopenssl -y;
-    pip3 install -U pyopenssl;
-    pip3 install ipdb;
+    sudo apk add openssl-dev;
+    pip uninstall pyopenssl -y;
+    pip install -U pyopenssl;
+    pip install ipdb;
 '";
-
-# INSTALL PYRASITE-SHELL ON CONTAINER
-alias hpyrasite_install="hipdb_docker; docker exec hacienda_app sh -c '\
-    apk add make linux-headers texinfo gcc g++;
-
-    wget http://ftp.gnu.org/gnu/gdb/gdb-7.11.tar.xz;
-    tar -xvf gdb-7.11.tar.xz;
-    cd gdb-7.11;
-    ./configure --prefix=/usr;
-    make;
-    make -C gdb install;
-
-    pip install pyrasite pyrasite-gui;
-    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope;
-'";
-
-# AWAKEN THE SLEEPING GIANT
-alias hrestart_giant="hrestart_heavy; sleep 40; hpyrasite_install; echo 'DONE';";
-
 
 # RUNNING TESTS ALIASES
 alias hut_local=hut_local;
@@ -130,3 +111,21 @@ alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 
 # VISUALIZE THE SCHEMA AND RELATIONS
 alias hvizpdf="hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
+
+
+# BELOW HERE IS ALL EXPERIMENTAL RUBBISH
+#
+## INSTALL PYRASITE-SHELL ON CONTAINER
+## this only works if you add this to the overrider compose yml for the app service
+##     cap_add:
+##       - SYS_PTRACE
+##     privileged: true
+#alias hpyrasite_install="hipdb_docker; docker exec hacienda_app sh -c '\
+    #apk add gdb;
+    #pip install pyrasite;
+    #echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    #ps -ef | grep python;
+#'";
+#
+## AWAKEN THE SLEEPING GIANT
+##alias hrestart_giant="hrestart_heavy; sleep 40; hpyrasite_install; echo 'DONE';";
