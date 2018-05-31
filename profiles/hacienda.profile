@@ -80,7 +80,6 @@ hrun_tests_on_container()  {
         echo 'run-contexts -s /opt/hacienda/hacienda/tests/integration/$2' > /test_scripts/integration_tests;
         chmod +x /test_scripts/integration_tests;
 ";
-    docker exec -d hacienda_app pip install ipdb;
     docker-compose exec hacienda sh -i --init-file $1;
 }
 
@@ -88,6 +87,16 @@ hrun_tests_on_container()  {
 hut_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/$1 };
 hat_local(){ hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1 };
 hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1 };
+
+# INSTALL IPDB ON CONTAINER
+# see https://github.com/madedotcom/hacienda/issues/779
+alias hipdb_docker="docker exec hacienda_app sh -c '\
+    apk del postgresql-dev;
+    apk add openssl-dev;
+    pip3 uninstall pyopenssl -y;
+    pip3 install -U pyopenssl;
+    pip3 install ipdb;
+'";
 
 # RUNNING TESTS ALIASES
 alias hut_local=hut_local;
