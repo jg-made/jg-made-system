@@ -59,7 +59,7 @@ alias hkill=hkill;
 hrestart_heavy() {
     echo "restarting $HACIENDA_SCREEN_NAME";
     log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
-    dkcub_cmd="docker-compose up --build > $log_filepath; exit";
+    dkcub_cmd="docker-compose up --build | tee $log_filepath; exit";
     hkill;
     hdb_with_auth local screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
     ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
@@ -97,6 +97,25 @@ alias hipdb_docker="docker exec hacienda_app sh -c '\
     pip3 install -U pyopenssl;
     pip3 install ipdb;
 '";
+
+# INSTALL PYRASITE-SHELL ON CONTAINER
+alias hpyrasite_install="hipdb_docker; docker exec hacienda_app sh -c '\
+    apk add make linux-headers texinfo gcc g++;
+
+    wget http://ftp.gnu.org/gnu/gdb/gdb-7.11.tar.xz;
+    tar -xvf gdb-7.11.tar.xz;
+    cd gdb-7.11;
+    ./configure --prefix=/usr;
+    make;
+    make -C gdb install;
+
+    pip install pyrasite pyrasite-gui;
+    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope;
+'";
+
+# AWAKEN THE SLEEPING GIANT
+alias hrestart_giant="hrestart_heavy; sleep 40; hpyrasite_install; echo 'DONE';";
+
 
 # RUNNING TESTS ALIASES
 alias hut_local=hut_local;
