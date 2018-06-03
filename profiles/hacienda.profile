@@ -21,24 +21,25 @@ hdb_with_auth() {
     source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
     case $1 in
     "local" | "docker")
-        password=$HACIENDA_PGPASSWORD_LOCAL
+        password=$HACIENDA_PGPASSWORD_LOCAL;
+        host='127.0.0.1';
         ;;
     "test")
-        password=$HACIENDA_PGPASSWORD_TEST
+        password=$HACIENDA_PGPASSWORD_TEST;
+        host=$HACIENDA_PGHOST_TEST;
         ;;
     *)
-        password=''
         ;;
     esac
     shift 1
-    PGPASSWORD=$password "$@";
+    PGPASSWORD=$password PGHOST=$host "$@";
     source $JG_MADE_SYSTEM/auths/unset/hacienda.profile;
 }
 
 # DB ACCESS ALIASES
-alias hdb_local='hdb_with_auth local pgcli -p 5432 -h 127.0.0.1 -U hacienda hacienda';
-alias hdb_docker='hdb_with_auth docker hrun_in_project_dir docker-compose exec hacienda psql --username=hacienda --host=db';
-alias hdb_test='hdb_with_auth test pgcli -U hacienda -h test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com hacienda';
+alias hdb_local="hdb_with_auth local pgcli -p 5432 -U hacienda hacienda";
+alias hdb_docker="hdb_with_auth docker hrun_in_project_dir docker-compose exec hacienda psql --username=hacienda --host=db";
+alias hdb_test="hdb_with_auth test pgcli -U hacienda hacienda";
 
 # STOPPING APP
 hkill() {
@@ -111,7 +112,7 @@ alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/inte
 alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 
 # VISUALIZE THE SCHEMA AND RELATIONS
-alias hvizpdf="hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@test-hacienda.c6vg0z0aw3eq.eu-west-1.rds.amazonaws.com/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
+alias hvizpdf="hrun_in_project_dir hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
 
 
 # BELOW HERE IS ALL EXPERIMENTAL RUBBISH
