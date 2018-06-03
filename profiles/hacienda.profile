@@ -10,7 +10,8 @@ export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
-    "$@";
+    # we need to replace some domains with localhost
+    eval $(cat .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:/localhost:/g' -e 's/hacienda-ui:/localhost:/g') "$@";
     cd $current_dir;
 }
 
@@ -56,7 +57,7 @@ hkill() {
 alias hkill=hkill;
 
 # (RE)STARTING APP THOROUGHLY
-hrestart_heavy() {
+hrestart_heavy_unsafe() {
     echo "restarting $HACIENDA_SCREEN_NAME";
     log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
     dkcub_cmd="docker-compose up --build | tee $log_filepath; exit";
@@ -64,7 +65,7 @@ hrestart_heavy() {
     hdb_with_auth local screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
     ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
 }
-alias hrestart_heavy='hrun_in_project_dir hrestart_heavy';
+alias hrestart_heavy='hrun_in_project_dir hrestart_heavy_unsafe';
 
 # RESTARTING APP QUICKLY
 alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
