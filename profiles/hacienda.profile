@@ -10,8 +10,21 @@ export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
-    # we need to replace some domains with localhost
-    eval $(cat .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:/localhost:/g' -e 's/hacienda-ui:/localhost:/g') "$@";
+    casey=$1
+    shift 1
+    # we need to replace some domains with localhost and remap ports
+    case $casey in
+        "local")
+            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g');
+            ;;
+        "docker")
+            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g' | xargs)
+            ;;
+        *)
+            ;;
+    esac
+    export $env_vars && "$@";
+    unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs)
     cd $current_dir;
 }
 
@@ -22,7 +35,6 @@ hdb_with_auth() {
     case $1 in
     "local" | "docker")
         password=$HACIENDA_PGPASSWORD_LOCAL;
-        host='127.0.0.1';
         ;;
     "test")
         password=$HACIENDA_PGPASSWORD_TEST;
@@ -37,8 +49,8 @@ hdb_with_auth() {
 }
 
 # DB ACCESS ALIASES
-alias hdb_local="hdb_with_auth local pgcli -p 5432 -U hacienda hacienda";
-alias hdb_docker="hdb_with_auth docker hrun_in_project_dir docker-compose exec hacienda psql --username=hacienda --host=db";
+alias hdb_local="hdb_with_auth local pgcli -p 5432 -U hacienda -h 127.0.0.1 hacienda";
+alias hdb_docker="hdb_with_auth docker hrun_in_project_dir docker docker-compose exec hacienda psql --username=hacienda --host=db";
 alias hdb_test="hdb_with_auth test pgcli -U hacienda hacienda";
 
 # STOPPING APP
@@ -58,18 +70,18 @@ hkill() {
 alias hkill=hkill;
 
 # (RE)STARTING APP THOROUGHLY
-hrestart_heavy_unsafe() {
+hrestart_heavy() {
     echo "restarting $HACIENDA_SCREEN_NAME";
     log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
     dkcub_cmd="docker-compose up --build | tee $log_filepath; exit";
     hkill;
-    hdb_with_auth local screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
+    hdb_with_auth local hrun_in_project_dir docker screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
     ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
 }
-alias hrestart_heavy='hrun_in_project_dir hrestart_heavy_unsafe';
+alias hrestart_heavy='hrestart_heavy';
 
 # RESTARTING APP QUICKLY
-alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
+alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
 
 # RUNNING TESTS ON CONTAINER USING FILES CREATED ON THE CONTAINER
 hrun_tests_on_container()  {
@@ -84,11 +96,14 @@ hrun_tests_on_container()  {
 ";
     docker-compose exec hacienda sh -i --init-file $1;
 }
+alias hut_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/unit_tests';
+alias hat_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/acceptance_tests';
+alias hit_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/integration_tests';
 
 # RUNNING TESTS LOCALLY
-hut_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/$1 };
-hat_local(){ hrun_in_project_dir run-contexts -s src/hacienda/acceptance/$1 };
-hit_local(){ hrun_in_project_dir run-contexts -s src/hacienda/tests/integration/$1 };
+hut_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/$1 };
+hat_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/acceptance/$1 };
+hit_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/integration/$1 };
 
 # INSTALL IPDB ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
@@ -100,19 +115,11 @@ alias hipdb_docker="docker exec --privileged hacienda_app sh -c '\
     pip install ipdb;
 '";
 
-# RUNNING TESTS ALIASES
-alias hut_local=hut_local;
-alias hat_local=hat_local;
-alias hit_local=hit_local;
-alias hut_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/unit_tests';
-alias hat_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/acceptance_tests';
-alias hit_docker='hrun_in_project_dir hrun_tests_on_container /test_scripts/integration_tests';
-
 # QUICK ACCESS LATEST LOG OF LATEST LOCAL RUN
 alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 
 # VISUALIZE THE SCHEMA AND RELATIONS
-alias hvizpdf="hrun_in_project_dir hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
+alias hvizpdf="hrun_in_project_dir docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
 
 
 # BELOW HERE IS ALL EXPERIMENTAL RUBBISH
