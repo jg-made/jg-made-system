@@ -10,10 +10,8 @@ export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
-    casey=$1
-    shift 1
     # we need to replace some domains with localhost and remap ports
-    case $casey in
+    case $1 in
         "local")
             env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g');
             ;;
@@ -23,6 +21,7 @@ hrun_in_project_dir() {
         *)
             ;;
     esac
+    shift 1
     export $env_vars && "$@";
     unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs)
     cd $current_dir;
@@ -105,14 +104,14 @@ hut_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/$1 };
 hat_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/acceptance/$1 };
 hit_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/integration/$1 };
 
-# INSTALL IPDB ON CONTAINER
+# INSTALL USEFUL PIP PACKAGES ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
-alias hipdb_docker="docker exec --privileged hacienda_app sh -c '\
+alias hpipuseful_docker="docker exec --privileged hacienda_app sh -c '\
     apk del postgresql-dev;
     sudo apk add openssl-dev;
     pip uninstall pyopenssl -y;
     pip install -U pyopenssl;
-    pip install ipdb;
+    pip install ipdb ipython ipython-sql pgcli
 '";
 
 # QUICK ACCESS LATEST LOG OF LATEST LOCAL RUN
