@@ -120,20 +120,25 @@ alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 # VISUALIZE THE SCHEMA AND RELATIONS
 alias hvizpdf="hrun_in_project_dir docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
 
+# (RE)START THE APP AND INSTALL ALL THE USEFUL PIP STUFF IN ONE CLUMSY FUNCTION
+alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker"
+
+# LAZY FINGERS
+alias hworkon="cd $HACIENDA_PROJECT_DIR"
 
 # BELOW HERE IS ALL EXPERIMENTAL RUBBISH
-#
-## INSTALL PYRASITE-SHELL ON CONTAINER
-## this only works if you add this to the overrider compose yml for the app service
-##     cap_add:
-##       - SYS_PTRACE
-##     privileged: true
-#alias hpyrasite_install="hipdb_docker; docker exec hacienda_app sh -c '\
-    #apk add gdb;
-    #pip install pyrasite;
-    #echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-    #ps -ef | grep python;
-#'";
-#
-## AWAKEN THE SLEEPING GIANT
-##alias hrestart_giant="hrestart_heavy; sleep 40; hpyrasite_install; echo 'DONE';";
+
+# INSTALL PYRASITE-SHELL ON CONTAINER
+# this only works if you add this to the overrider compose yml for the app service
+#     cap_add:
+#       - SYS_PTRACE
+#     privileged: true
+alias hpyrasite_install="docker exec --privileged hacienda_app sh -c '\
+    sudo apk add gdb;
+    pip install pyrasite;
+    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    ps -ef | grep python;
+'";
+
+# AWAKEN THE SLEEPING GIANT
+alias hrestart_giant="hrestart_insane; sleep 40; hpyrasite_install; echo 'DONE';";

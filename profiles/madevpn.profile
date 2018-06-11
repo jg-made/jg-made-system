@@ -71,6 +71,8 @@ madevpn_start() {
 
         sudo chmod 600 $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
 
+        echo "got new secret key. Trying to start $MADEVPN_SCREEN_NAME now"
+
         sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
 
         # the vpn needs a little time to connect before we delete the secret auth file
@@ -78,12 +80,9 @@ madevpn_start() {
 
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
 
-        if (sudo screen -ls | grep -q $MADEVPN_SCREEN_NAME)
-        then
-            madevpn_check
-        else
-            echo "madevpn FAILED to start (screen is not running)";
-        fi
+        # the vpn needs a little time before we test it
+        sleep 3
+        madevpn_check
     fi
 }
 alias madevpn_start=madevpn_start;
