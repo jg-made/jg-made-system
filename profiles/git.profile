@@ -1,7 +1,12 @@
 gc_commit_message() {
   git add .;
   vim .gc_commit_message;
-  git commit -a -F .gc_commit_message;
+  if [ $# -eq 1 ]
+  then
+    git commit --date=$1 -a -F .gc_commit_message;
+  else
+    git commit -a -F .gc_commit_message;
+  fi
 }
 alias gc_commit_message=gc_commit_message;
 
@@ -24,4 +29,3 @@ glolacherry() {
     git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)           %C(bold blue)<%an>%Creset' --no-merges master..;
 }
 alias glolacherry=glolacherry;
-
