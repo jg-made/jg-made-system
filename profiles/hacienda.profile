@@ -10,20 +10,30 @@ export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
+    # create a file that will become the script we run in lieu of the original command
+    tmpfile=$(mktemp /tmp/hacienda.env.XXXXXX)
     # we need to replace some domains with localhost and remap ports
     case $1 in
         "local")
-            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g');
+            grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g'  > $tmpfile;
             ;;
         "docker")
-            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g' | xargs)
+            grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g'  > $tmpfile;
             ;;
         *)
             ;;
     esac
     shift 1
-    export $env_vars && "$@";
-    unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs)
+    echo "$@" >> $tmpfile
+    tmpfile_oneline=$(awk '{printf "%s ", $0}' $tmpfile)
+    echo "#!/usr/bin/env zsh" > $tmpfile
+    echo ". $JG_MADE_SYSTEM/profiles/hacienda.profile;" >> $tmpfile
+    echo $tmpfile_oneline >> $tmpfile
+    chmod +x $tmpfile
+    $tmpfile
+    rm -f "$tmpfile";
+    unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs);
+    unset $tmpfile
     cd $current_dir;
 }
 
@@ -81,6 +91,8 @@ alias hrestart_heavy='hrestart_heavy';
 
 # RESTARTING APP QUICKLY
 alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
+alias hrestart_light_ui='hdb_with_auth local hrun_in_project_dir docker docker-compose exec hacienda-ui s6-svc -h var/run/s6/services/hacienda-ui';
+
 
 # RUNNING TESTS ON CONTAINER USING FILES CREATED ON THE CONTAINER
 hrun_tests_on_container()  {
