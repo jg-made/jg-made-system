@@ -10,30 +10,44 @@ export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
-    # create a file that will become the script we run in lieu of the original command
-    tmpfile=$(mktemp /tmp/hacienda.env.XXXXXX)
+    use_script=$1
+    shift 1
     # we need to replace some domains with localhost and remap ports
     case $1 in
         "local")
-            grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g'  > $tmpfile;
+            # grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g'  > $tmpfile;
+            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4572/localhost:4572/g' -e 's/hacienda-ui:/localhost:/g' -e 's/=ftp$/=localhost/g' -e 's/=db$/=localhost/g' -e 's/FTP_PORT=21/FTP_PORT=35000/g');
             ;;
         "docker")
-            grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g'  > $tmpfile;
+            # grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g'  > $tmpfile;
+            env_vars=$(grep -v '^#' .env | sed -e 's/elasticsearch_new:/localhost:/g' -e 's/elasticsearch:/localhost:/g' -e 's/localstack:4576/localhost:4576/g');
             ;;
         *)
             ;;
     esac
     shift 1
-    echo "$@" >> $tmpfile
-    tmpfile_oneline=$(awk '{printf "%s ", $0}' $tmpfile)
-    echo "#!/usr/bin/env zsh" > $tmpfile
-    echo ". $JG_MADE_SYSTEM/profiles/hacienda.profile;" >> $tmpfile
-    echo $tmpfile_oneline >> $tmpfile
-    chmod +x $tmpfile
-    $tmpfile
-    rm -f "$tmpfile";
+
+    case $use_script in
+        "script")
+            tmpfile=$(mktemp /tmp/hacienda.env.XXXXXX);
+            echo $env_vars > $tmpfile;
+            echo "$@" >> $tmpfile;
+            tmpfile_oneline=$(awk '{printf "%s ", $0}' $tmpfile);
+            echo "#!/usr/bin/env zsh" > $tmpfile;
+            echo ". $JG_MADE_SYSTEM/profiles/hacienda.profile;" >> $tmpfile;
+            echo $tmpfile_oneline >> $tmpfile;
+            chmod +x $tmpfile;
+            $tmpfile;
+            rm -f "$tmpfile";
+            unset $tmpfile
+            ;;
+        *)
+            export $env_vars && "$@";
+            ;;
+    esac
+
     unset $(grep -v '^#' .env | sed -E 's/(.*)=.*/\1/' | xargs);
-    unset $tmpfile
+    unset $use_script
     cd $current_dir;
 }
 
@@ -59,7 +73,7 @@ hdb_with_auth() {
 
 # DB ACCESS ALIASES
 alias hdb_local="hdb_with_auth local pgcli -p 5432 -U hacienda -h 127.0.0.1 hacienda";
-alias hdb_docker="hdb_with_auth docker hrun_in_project_dir docker docker-compose exec hacienda psql --username=hacienda --host=db";
+alias hdb_docker="hdb_with_auth docker hrun_in_project_dir script docker docker-compose exec hacienda psql --username=hacienda --host=db";
 alias hdb_test="hdb_with_auth test pgcli -U hacienda hacienda";
 
 # STOPPING APP
@@ -84,14 +98,14 @@ hrestart_heavy() {
     log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
     dkcub_cmd="docker-compose up --build | tee $log_filepath; exit";
     hkill;
-    hdb_with_auth local hrun_in_project_dir docker screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
+    hdb_with_auth local hrun_in_project_dir noscript docker screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
     ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
 }
 alias hrestart_heavy='hrestart_heavy';
 
 # RESTARTING APP QUICKLY
-alias hrestart_light='hdb_with_auth local hrun_in_project_dir docker docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
-alias hrestart_light_ui='hdb_with_auth local hrun_in_project_dir docker docker-compose exec hacienda-ui s6-svc -h var/run/s6/services/hacienda-ui';
+alias hrestart_light='hdb_with_auth local hrun_in_project_dir noscript docker docker-compose exec hacienda s6-svc -h var/run/s6/services/hacienda';
+alias hrestart_light_ui='hdb_with_auth local hrun_in_project_dir noscript docker docker-compose exec hacienda-ui s6-svc -h var/run/s6/services/hacienda-ui';
 
 
 # RUNNING TESTS ON CONTAINER USING FILES CREATED ON THE CONTAINER
@@ -107,14 +121,14 @@ hrun_tests_on_container()  {
 ";
     docker-compose exec hacienda sh -i --init-file $1;
 }
-alias hut_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/unit_tests';
-alias hat_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/acceptance_tests';
-alias hit_docker='hrun_in_project_dir docker hrun_tests_on_container /test_scripts/integration_tests';
+alias hut_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/unit_tests';
+alias hat_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/acceptance_tests';
+alias hit_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/integration_tests';
 
 # RUNNING TESTS LOCALLY
-hut_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/$1 };
-hat_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/acceptance/$1 };
-hit_local(){ hrun_in_project_dir local run-contexts -s src/hacienda/tests/integration/$1 };
+hut_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/$1 };
+hat_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/acceptance/$1 };
+hit_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/integration/$1 };
 
 # INSTALL USEFUL PIP PACKAGES ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
@@ -130,7 +144,7 @@ alias hpipuseful_docker="docker exec --privileged hacienda_app sh -c '\
 alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 
 # VISUALIZE THE SCHEMA AND RELATIONS
-alias hvizpdf="hrun_in_project_dir docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
+alias hvizpdf="hrun_in_project_dir script docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
 
 # (RE)START THE APP AND INSTALL ALL THE USEFUL PIP STUFF IN ONE CLUMSY FUNCTION
 alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker"
