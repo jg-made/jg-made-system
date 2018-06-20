@@ -100,6 +100,11 @@ hrestart_heavy() {
     hkill;
     hdb_with_auth local hrun_in_project_dir noscript docker screen -S $HACIENDA_SCREEN_NAME -d -m bash -c $dkcub_cmd;
     ln -s -f $log_filepath $HACIENDA_LOGS_DIR/latest
+    while [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" http://localhost:5000) -ne 302 ]
+    do
+        sleep 3
+    done
+    echo "hrestart_heavy complete"
 }
 alias hrestart_heavy='hrestart_heavy';
 
