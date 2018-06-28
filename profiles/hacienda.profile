@@ -117,11 +117,11 @@ alias hrestart_light_ui='hdb_with_auth local hrun_in_project_dir noscript docker
 hrun_tests_on_container()  {
     docker-compose exec hacienda sh -c "\
         mkdir -p /test_scripts;
-        echo 'run-contexts -s /opt/hacienda/hacienda/tests/$2' > /test_scripts/unit_tests;
+        echo 'run-contexts -sv /opt/hacienda/hacienda/tests/$2' > /test_scripts/unit_tests;
         chmod +x /test_scripts/unit_tests;
-        echo 'run-contexts -s /opt/hacienda/hacienda/acceptance/$2' > /test_scripts/acceptance_tests;
+        echo 'run-contexts -sv /opt/hacienda/hacienda/acceptance/$2' > /test_scripts/acceptance_tests;
         chmod +x /test_scripts/acceptance_tests;
-        echo 'run-contexts -s /opt/hacienda/hacienda/tests/integration/$2' > /test_scripts/integration_tests;
+        echo 'run-contexts -sv /opt/hacienda/hacienda/tests/integration/$2' > /test_scripts/integration_tests;
         chmod +x /test_scripts/integration_tests;
 ";
     docker-compose exec hacienda sh -i --init-file $1;
@@ -131,9 +131,9 @@ alias hat_docker='hrun_in_project_dir script docker hrun_tests_on_container /tes
 alias hit_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/integration_tests';
 
 # RUNNING TESTS LOCALLY
-hut_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/$1 };
-hat_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/acceptance/$1 };
-hit_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/integration/$1 };
+hut_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/$1 };
+hat_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/acceptance/$1 };
+hit_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/integration/$1 };
 
 # INSTALL USEFUL PIP PACKAGES ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
