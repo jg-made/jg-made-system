@@ -4,6 +4,7 @@
 .gitignore
 .agignore
 .gc_commit_message
+.git-rewrite
 .#*
 .DS_Store
 

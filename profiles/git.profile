@@ -3,7 +3,7 @@ gc_commit_message() {
   vim .gc_commit_message;
   if [ $# -eq 1 ]
   then
-    git commit --date=$1 -a -F .gc_commit_message;
+    GIT_COMMITTER_DATE=$1 git commit --date=$1 -a -F .gc_commit_message;
   else
     git commit -a -F .gc_commit_message;
   fi
