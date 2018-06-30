@@ -95,6 +95,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export JG_MADE_SYSTEM="$HOME/.jg-made-system/"
+source $JG_MADE_SYSTEM/profiles/beep.profile
 source $JG_MADE_SYSTEM/profiles/bluejeans.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
