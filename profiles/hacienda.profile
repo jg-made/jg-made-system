@@ -159,7 +159,7 @@ alias hworkon="cd $HACIENDA_PROJECT_DIR";
 
 # SNIPER TESTING
 hat_sniper(){
-    read -k 1 "confirmprune?prune all docker containers\? [Y/y to confirm, any other key to decline]\n"
+    read -k 1 "confirmprune?prune all docker containers\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirmprune in
     [Yy]* )
