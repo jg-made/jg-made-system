@@ -157,15 +157,22 @@ alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker";
 # LAZY FINGERS
 alias hworkon="cd $HACIENDA_PROJECT_DIR";
 
-# SNIPER TESTING
-hat_sniper(){
-    read -k 1 "confirmprune?prune all docker containers\? [Y/y to confirm, any other key to decline]"
+# PRUNE HACIENDA CONTAINERS
+hdkCpr() {
+    read -k 1 "confirmprune?prune all hacienda containers\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirmprune in
     [Yy]* )
-        docker container prune -f;;
+        docker container rm -f $(docker ps -a -q -f "name=hacienda.*")
+        ;;
     * ) ;;
     esac
+}
+alias hdkCpr=hdkCpr
+
+# SNIPER TESTING
+hat_sniper(){
+    hdkCpr
     hrestart_heavy;
     sleep 50; 
     hat_docker $1;
