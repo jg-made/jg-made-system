@@ -131,7 +131,7 @@ alias hat_docker='hrun_in_project_dir script docker hrun_tests_on_container /tes
 alias hit_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/integration_tests';
 
 # RUNNING TESTS LOCALLY
-hut_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/$1 };
+hut_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/$1 };
 hat_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/acceptance/$1 };
 hit_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/integration/$1 };
 
@@ -149,13 +149,31 @@ alias hpipuseful_docker="docker exec --privileged hacienda_app sh -c '\
 alias hlatestlog='vim $HACIENDA_LOGS_DIR/latest';
 
 # VISUALIZE THE SCHEMA AND RELATIONS
-alias hvizpdf="hrun_in_project_dir script docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf"
+alias hvizpdf="hrun_in_project_dir script docker hdb_with_auth test eralchemy -i 'postgresql+psycopg2://hacienda:$PGPASSWORD@$PGHOST/hacienda' -o ~/Desktop/hvizpdf_$(date +%F_%T).pdf";
 
 # (RE)START THE APP AND INSTALL ALL THE USEFUL PIP STUFF IN ONE CLUMSY FUNCTION
-alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker"
+alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker";
 
 # LAZY FINGERS
-alias hworkon="cd $HACIENDA_PROJECT_DIR"
+alias hworkon="cd $HACIENDA_PROJECT_DIR";
+
+# SNIPER TESTING
+hat_sniper(){
+    read -k 1 "confirmprune?prune all docker containers? [Y/y to confirm, any other key to decline]"
+    echo ""
+    case $confirmprune in
+    [Yy]* )
+        docker container prune -f;;
+    * ) ;;
+    esac
+    hrestart_heavy;
+    sleep 50; 
+    hat_docker $1;
+    beep;
+    hkill;
+}
+alias hat_sniper=hat_sniper;
+
 
 # BELOW HERE IS ALL EXPERIMENTAL RUBBISH
 
