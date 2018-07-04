@@ -29,3 +29,8 @@ glolacherry() {
     git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)           %C(bold blue)<%an>%Creset' --no-merges master..;
 }
 alias glolacherry=glolacherry;
+
+gdcolorwords() {
+    git diff --color-words;
+}
+alias gdcolorwords=gdcolorwords;
