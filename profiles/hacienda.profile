@@ -63,6 +63,10 @@ hdb_with_auth() {
         password=$HACIENDA_PGPASSWORD_TEST;
         host=$HACIENDA_PGHOST_TEST;
         ;;
+    "prod")
+        password=$HACIENDA_PGPASSWORD_PROD;
+        host=$HACIENDA_PGHOST_PROD;
+        ;;
     *)
         ;;
     esac
@@ -75,6 +79,7 @@ hdb_with_auth() {
 alias hdb_local="hdb_with_auth local pgcli -p 5432 -U hacienda -h 127.0.0.1 hacienda";
 alias hdb_docker="hdb_with_auth docker hrun_in_project_dir script docker docker-compose exec hacienda psql --username=hacienda --host=db";
 alias hdb_test="hdb_with_auth test pgcli -U hacienda hacienda";
+alias hdb_prod="hdb_with_auth prod pgcli -U hacienda hacienda";
 
 # STOPPING APP
 hkill() {
