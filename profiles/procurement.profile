@@ -7,10 +7,53 @@ export PROCUREMENT_API_PROJECT_DIR=$HOME/madedotcom/procurement;
 export PROCUREMENT_API_LOGS_DIR=$JG_MADE_SYSTEM/logs/$PROCUREMENT_API_SCREEN_NAME;
 
 export PROCUREMENT_UI_SCREEN_NAME=puidkcub;
-export PROCUREMENT_UI_PROJECT_DIR=$HOME/madedotcom/procurement_ui;
+export PROCUREMENT_UI_PROJECT_DIR=$HOME/madedotcom/procurement-ui;
 export PROCUREMENT_UI_LOGS_DIR=$JG_MADE_SYSTEM/logs/$PROCUREMENT_UI_SCREEN_NAME;
 
+# Allow later functions to be run from any directory
+papi_run_in_project_dir() {
+    current_dir=$(pwd);
+    cd $PROCUREMENT_API_PROJECT_DIR;
+    "$@";
+    cd $current_dir;
+}
+
+# LAZY FINGERS
 papiworkon() {
     cd $PROCUREMENT_API_PROJECT_DIR
 }
 alias papiworkon=papiworkon
+
+puiworkon() {
+    cd $PROCUREMENT_UI_PROJECT_DIR
+}
+alias puiworkon=puiworkon
+  
+# PRUNE PROCUREMENT CONTAINERS 
+papiprune() { 
+    read -k 1 "confirmprune?prune all procurement containers\? [Y/y to confirm, any other key to decline]" 
+    echo "" 
+    case $confirmprune in 
+    [Yy]* ) 
+        docker container rm -f $(docker ps -a -q -f "name=procurement.*") 
+        ;; 
+    * ) ;; 
+    esac 
+} 
+alias papiprune=papiprune 
+
+# CREATE LOGS
+papimakelogs() {
+    nowy=$(date +%F_%T)
+    log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
+    services_str=$(papi_run_in_project_dir docker-compose ps --services)
+    services_arr=($(echo "$services_str" | tr ',' '\n'))
+    ## now loop through the above array
+    for i in "${services_arr[@]}"
+    do
+        echo "$nowy$i"
+        papi_run_in_project_dir docker-compose logs "$i" > "$PROCUREMENT_API_LOGS_DIR/$nowy$i.log"
+    done
+}
+alias papimakelogs=papimakelogs
+

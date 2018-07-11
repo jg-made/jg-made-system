@@ -179,7 +179,7 @@ alias hdkCpr=hdkCpr
 hat_sniper(){
     hdkCpr
     hrestart_heavy;
-    sleep 50; 
+    sleep 22; 
     hat_docker $1;
     beep;
     hkill;
