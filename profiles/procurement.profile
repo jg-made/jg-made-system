@@ -17,6 +17,7 @@ papi_run_in_project_dir() {
     "$@";
     cd $current_dir;
 }
+alias papi_run_in_project_dir=papi_run_in_project_dir
 
 # LAZY FINGERS
 papiworkon() {
@@ -45,15 +46,20 @@ alias papiprune=papiprune
 # CREATE LOGS
 papimakelogs() {
     nowy=$(date +%F_%T)
-    log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
     services_str=$(papi_run_in_project_dir docker-compose ps --services)
     services_arr=($(echo "$services_str" | tr ',' '\n'))
     ## now loop through the above array
     for i in "${services_arr[@]}"
     do
-        echo "$nowy$i"
-        papi_run_in_project_dir docker-compose logs "$i" > "$PROCUREMENT_API_LOGS_DIR/$nowy$i.log"
+        echo "${nowy}_${i}"
+        log_filename="$PROCUREMENT_API_LOGS_DIR/${nowy}_${i}.log"
+        symlink_filename="$PROCUREMENT_API_LOGS_DIR/latest_$i.log"
+        papi_run_in_project_dir docker-compose logs "$i" > $log_filename
+        ln -s -f $log_filename $symlink_filename
     done
 }
 alias papimakelogs=papimakelogs
 
+alias papilatestlog_api='vim $PROCUREMENT_API_LOGS_DIR/latest_api.log'
+alias papilatestlog_eventconsumer='vim $PROCUREMENT_API_LOGS_DIR/latest_eventconsumer.log'
+alias papilatestlog_acceptance='vim $PROCUREMENT_API_LOGS_DIR/latest_acceptance.log'
