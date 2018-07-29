@@ -7,6 +7,7 @@
 .git-rewrite
 .#*
 .DS_Store
+.tern-port
 
 node_modules/
 
