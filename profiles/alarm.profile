@@ -21,10 +21,10 @@ alarms_set_mm_hh_weekdays_alarmfile() {
             echo "the given arguments are $@"
         fi
     else
-        echo "$1 $2 * * $3 jamesgough paplay --device=0 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
-        echo "$1 $2 * * $3 jamesgough paplay --device=1 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
-        echo "$1 $2 * * $3 jamesgough paplay --device=2 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
-        echo "$1 $2 * * $3 jamesgough paplay --device=3 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
+        echo "$1 $2 * * $3 $USER paplay --device=0 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
+        echo "$1 $2 * * $3 $USER paplay --device=1 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
+        echo "$1 $2 * * $3 $USER paplay --device=2 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
+        echo "$1 $2 * * $3 $USER paplay --device=3 /usr/share/sounds/ubuntu/ringtones/$4.ogg 2>/dev/null" | sudo tee -a $ALARM_CRON_FILE > /dev/null
     fi
 }
 
