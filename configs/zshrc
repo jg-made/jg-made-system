@@ -59,6 +59,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  elixir
   git
   pip
 )
@@ -95,6 +96,7 @@ source $JG_MADE_SYSTEM/profiles/dvm.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/hacienda.profile
+source $JG_MADE_SYSTEM/profiles/iex.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
