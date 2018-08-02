@@ -87,10 +87,12 @@ source $ZSH/oh-my-zsh.sh
 
 export JG_MADE_SYSTEM="$HOME/.jg-made-system/"
 source $JG_MADE_SYSTEM/profiles/alarm.profile
+source $JG_MADE_SYSTEM/profiles/asdf.profile
 source $JG_MADE_SYSTEM/profiles/beep.profile
 source $JG_MADE_SYSTEM/profiles/bluejeans.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
+source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/hacienda.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
@@ -100,6 +102,7 @@ source $JG_MADE_SYSTEM/profiles/postman.profile
 source $JG_MADE_SYSTEM/profiles/procurement.profile
 source $JG_MADE_SYSTEM/profiles/pyenv.profile
 source $JG_MADE_SYSTEM/profiles/python.profile
+source $JG_MADE_SYSTEM/profiles/vault.profile
 source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
 source $JG_MADE_SYSTEM/profiles/zplug.profile
