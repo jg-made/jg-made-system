@@ -30,6 +30,19 @@ puiworkon() {
 }
 alias puiworkon=puiworkon
   
+# KILL PROCUREMENT CONTAINERS 
+papikill() { 
+    read -k 1 "confirmkill?kill all procurement containers\? [Y/y to confirm, any other key to decline]" 
+    echo "" 
+    case $confirmkill in 
+    [Yy]* ) 
+        docker container kill $(docker ps -a -q -f "name=procurement.*") 
+        ;; 
+    * ) ;; 
+    esac 
+} 
+alias papikill=papikill 
+
 # PRUNE PROCUREMENT CONTAINERS 
 papiprune() { 
     read -k 1 "confirmprune?prune all procurement containers\? [Y/y to confirm, any other key to decline]" 
