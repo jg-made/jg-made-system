@@ -13,9 +13,11 @@ node_modules/
 
 __pycache__/
 .python-version
+.pylintrc
 *.pyc
 geckodriver.log
 
 .env
 
 .nvmrc
+TODOs.org
