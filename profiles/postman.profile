@@ -1,6 +1,6 @@
 export POSTMAN_LOG_DIR=$JG_MADE_SYSTEM/logs/postman;
 export POSTMAN_SCREEN_NAME=postman;
-postman() {
+function postman() {
     if (screen -ls | grep -q $POSTMAN_SCREEN_NAME)
         then
             echo "postman already running...";
@@ -11,11 +11,11 @@ postman() {
                                                                                                    }
 alias postman=postman
 
-    postman_kill() {
+function postman_kill() {
     if (screen -ls | grep -q $POSTMAN_SCREEN_NAME)
         then
             screen -S $POSTMAN_SCREEN_NAME -X quit
             echo "postman killed";
     fi
 }
-    alias postman_kill=postman_kill
+alias postman_kill=postman_kill

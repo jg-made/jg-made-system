@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+ export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -92,18 +92,19 @@ source $JG_MADE_SYSTEM/profiles/alarm.profile
 source $JG_MADE_SYSTEM/profiles/asdf.profile
 source $JG_MADE_SYSTEM/profiles/beep.profile
 source $JG_MADE_SYSTEM/profiles/bluejeans.profile
+source $JG_MADE_SYSTEM/profiles/consul.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
+source $JG_MADE_SYSTEM/profiles/emacs.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
-source $JG_MADE_SYSTEM/profiles/hacienda.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
+source $JG_MADE_SYSTEM/profiles/jira.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
 source $JG_MADE_SYSTEM/profiles/pgcli.profile
 source $JG_MADE_SYSTEM/profiles/postman.profile
-source $JG_MADE_SYSTEM/profiles/procurement.profile
 source $JG_MADE_SYSTEM/profiles/pyenv.profile
 source $JG_MADE_SYSTEM/profiles/python.profile
 source $JG_MADE_SYSTEM/profiles/vault.profile
@@ -111,3 +112,7 @@ source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
 source $JG_MADE_SYSTEM/profiles/zplug.profile
 
+# MADE projects
+source $JG_MADE_SYSTEM/profiles/hacienda.profile
+source $JG_MADE_SYSTEM/profiles/procurement.profile
+source $JG_MADE_SYSTEM/profiles/erp.profile

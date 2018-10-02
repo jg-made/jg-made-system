@@ -7,7 +7,7 @@ export HACIENDA_PROJECT_DIR=$HOME/madedotcom/hacienda;
 export HACIENDA_LOGS_DIR=$JG_MADE_SYSTEM/logs/$HACIENDA_SCREEN_NAME;
 
 # Allow later functions to be run from any directory
-hrun_in_project_dir() {
+function hrun_in_project_dir() {
     current_dir=$(pwd);
     cd $HACIENDA_PROJECT_DIR;
     use_script=$1
@@ -52,7 +52,7 @@ hrun_in_project_dir() {
 }
 
 # SETTING DB PASSWORDS
-hdb_with_auth() {
+function hdb_with_auth() {
     # Source the DB passwords
     source $JG_MADE_SYSTEM/auths/hacienda/hacienda.profile;
     case $1 in
@@ -82,7 +82,7 @@ alias hdb_test="hdb_with_auth test pgcli -U hacienda hacienda";
 alias hdb_prod="hdb_with_auth prod pgcli -U hacienda hacienda";
 
 # STOPPING APP
-hkill() {
+function hkill() {
     if (screen -ls | grep -q $HACIENDA_SCREEN_NAME)
         then
             echo "killing $HACIENDA_SCREEN_NAME, please wait...";
@@ -98,7 +98,7 @@ hkill() {
 alias hkill=hkill;
 
 # (RE)STARTING APP THOROUGHLY
-hrestart_heavy() {
+function hrestart_heavy() {
     echo "restarting $HACIENDA_SCREEN_NAME";
     log_filepath="$HACIENDA_LOGS_DIR/$(date +%F_%T).log";
     dkcub_cmd="docker-compose up --build | tee $log_filepath; exit";
@@ -119,7 +119,7 @@ alias hrestart_light_ui='hdb_with_auth local hrun_in_project_dir noscript docker
 
 
 # RUNNING TESTS ON CONTAINER USING FILES CREATED ON THE CONTAINER
-hrun_tests_on_container()  {
+function hrun_tests_on_container()  {
     docker-compose exec hacienda sh -c "\
         mkdir -p /test_scripts;
         echo 'run-contexts -sv /opt/hacienda/hacienda/tests/$2' > /test_scripts/unit_tests;
@@ -136,9 +136,9 @@ alias hat_docker='hrun_in_project_dir script docker hrun_tests_on_container /tes
 alias hit_docker='hrun_in_project_dir script docker hrun_tests_on_container /test_scripts/integration_tests';
 
 # RUNNING TESTS LOCALLY
-hut_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/$1 };
-hat_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/acceptance/$1 };
-hit_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/integration/$1 };
+function hut_local(){ hrun_in_project_dir script local run-contexts -s src/hacienda/tests/$1 };
+function hat_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/acceptance/$1 };
+function hit_local(){ hrun_in_project_dir script local run-contexts -sv src/hacienda/tests/integration/$1 };
 
 # INSTALL USEFUL PIP PACKAGES ON CONTAINER
 # see https://github.com/madedotcom/hacienda/issues/779
@@ -163,7 +163,7 @@ alias hrestart_insane="hrestart_heavy; sleep 75; hpipuseful_docker";
 alias hworkon="cd $HACIENDA_PROJECT_DIR";
 
 # PRUNE HACIENDA CONTAINERS
-hdkCpr() {
+function hdkCpr() {
     read -k 1 "confirmprune?prune all hacienda containers\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirmprune in
@@ -176,7 +176,7 @@ hdkCpr() {
 alias hdkCpr=hdkCpr
 
 # SNIPER TESTING
-hat_sniper(){
+function hat_sniper(){
     hdkCpr
     hrestart_heavy;
     sleep 22; 

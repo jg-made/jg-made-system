@@ -3,15 +3,15 @@
 
 export ALARM_CRON_FILE=/etc/cron.d/alarm
 
-alarms_see_all() {
+function alarms_see_all() {
     cat $ALARM_CRON_FILE 2>/dev/null
 }
 
-alarms_clear_all() {
+function alarms_clear_all() {
     sudo rm $ALARM_CRON_FILE 2>/dev/null
 }
 
-alarms_set_mm_hh_weekdays_alarmfile() {
+function alarms_set_mm_hh_weekdays_alarmfile() {
     if [ $# -ne 4 ];
     then
         echo "you need to specify 4 arguments: mm hh weekdays alarm_file_name_without_suffix"
@@ -28,7 +28,7 @@ alarms_set_mm_hh_weekdays_alarmfile() {
     fi
 }
 
-alarms_reset_to_usual() {
+function alarms_reset_to_usual() {
     alarms_clear_all;
     alarms_set_mm_hh_weekdays_alarmfile 00 09 1-5 'Celestial'
     alarms_set_mm_hh_weekdays_alarmfile 05 09 1-5 'Wind\ chime'
@@ -38,7 +38,7 @@ alarms_reset_to_usual() {
     alarms_set_mm_hh_weekdays_alarmfile 00 10 1-5 'Alarm\ clock'
 }
 
-alarms_reset_to_london() {
+function alarms_reset_to_london() {
     alarms_clear_all;
     alarms_set_mm_hh_weekdays_alarmfile 00 08 1-5 'Celestial'
     alarms_set_mm_hh_weekdays_alarmfile 05 08 1-5 'Wind\ chime'

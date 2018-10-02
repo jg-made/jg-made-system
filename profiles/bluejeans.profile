@@ -1,6 +1,7 @@
 export BLUEJEANS_LOG_DIR=$JG_MADE_SYSTEM/logs/bluejeans;
 export BLUEJEANS_SCREEN_NAME=bluejeans;
-bluejeans() {
+
+function bluejeans() {
   if (screen -ls | grep -q $BLUEJEANS_SCREEN_NAME)
   then 
     echo "bluejeans already running...";
@@ -11,7 +12,7 @@ bluejeans() {
 }
 alias bluejeans=bluejeans
 
-bluejeans_kill() {
+function bluejeans_kill() {
   if (screen -ls | grep -q $BLUEJEANS_SCREEN_NAME)
   then 
     screen -S $BLUEJEANS_SCREEN_NAME -X quit
