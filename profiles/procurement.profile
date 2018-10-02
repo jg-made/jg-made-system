@@ -1,12 +1,9 @@
-# Ensure DB passwords not known globally
-source $JG_MADE_SYSTEM/auths/unset/procurement.profile;
-
 # Export some useful vars
-export PROCUREMENT_API_PROJECT_DIR=$HOME/madedotcom/procurement;
+export PROCUREMENT_PROJECT_DIR=$HOME/madedotcom/procurement;
 
 # LAZY FINGERS
 function papiworkon() {
-    cd $PROCUREMENT_API_PROJECT_DIR
+    cd $PROCUREMENT_PROJECT_DIR
 }
 alias papiworkon=papiworkon
 
