@@ -25,3 +25,7 @@ function jview() {
     # for this to work you need to install pandoc and lynx
     jira view $1 | pandoc | lynx --stdin
 }
+
+function jjview() {
+    jview $(git_current_branch | grep -o -e 'bos-[0-9]*')
+}
