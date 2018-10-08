@@ -1,7 +1,5 @@
 # works with https://github.com/Netflix-Skunkworks/go-jira
 
-# use `jira view bos-666` to see a particular issue in detail
-
 function jira_see_all_boards() {
     jira req "/rest/agile/1.0/board?projectKeyOrId=BOS"
 }
@@ -13,11 +11,17 @@ function jira_see_particular_board() {
 alias jira_see_particular_board=jira_see_particular_board
 
 function jira_papi_backlog() {
-    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=2" -t table  
+    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=2" -t table
 }
 alias jira_papi_backlog=jira_papi_backlog
 
 function jira_papi_in_progress() {
-    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=4" -t table  
+    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=4" -t table
 }
 alias jira_papi_in_progress=jira_papi_in_progress
+
+function jview() {
+    # e.g. jview bos-666
+    # for this to work you need to install pandoc and lynx
+    jira view $1 | pandoc | lynx --stdin
+}
