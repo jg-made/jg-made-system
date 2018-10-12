@@ -22,7 +22,7 @@ ZSH_THEME="semaphore"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -40,7 +40,7 @@ ZSH_THEME="semaphore"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -99,7 +99,6 @@ source $JG_MADE_SYSTEM/profiles/emacs.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
-source $JG_MADE_SYSTEM/profiles/jira.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
@@ -111,6 +110,9 @@ source $JG_MADE_SYSTEM/profiles/vault.profile
 source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
 source $JG_MADE_SYSTEM/profiles/zplug.profile
+
+# jira convenience functions rely on zsh git aliases
+source $JG_MADE_SYSTEM/profiles/jira.profile
 
 # MADE projects - rely on vault, consul,
 source $JG_MADE_SYSTEM/profiles/hacienda.profile
