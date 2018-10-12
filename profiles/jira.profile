@@ -11,12 +11,12 @@ function jira_see_particular_board() {
 alias jira_see_particular_board=jira_see_particular_board
 
 function jira_papi_backlog() {
-    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=2" -t table
+    jira req "/rest/agile/1.0/board/36/issue?jql=statusCategory=2" -t table
 }
 alias jira_papi_backlog=jira_papi_backlog
 
 function jira_papi_in_progress() {
-    jira req "/rest/agile/1.0/board/29/issue?jql=statusCategory=4" -t table
+    jira req "/rest/agile/1.0/board/36/issue?jql=statusCategory=4" -t table
 }
 alias jira_papi_in_progress=jira_papi_in_progress
 
@@ -27,5 +27,5 @@ function jview() {
 }
 
 function jjview() {
-    jview $(git_current_branch | grep -o -e 'bos-[0-9]*')
+    jview $(git_current_branch | grep -o -e '[^0-9]*[0-9]*')
 }
