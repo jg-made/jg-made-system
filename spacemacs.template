@@ -79,6 +79,8 @@ This function should only modify configuration layer settings."
      eldoc
      flycheck
      angular-mode
+     solaire-mode
+     doom-themes
      (flycheck-jest :location elpa)
      (groovy-mode :location elpa)
      (hcl-mode :location elpa)
@@ -180,17 +182,16 @@ It should only modify the values of Spacemacs settings."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         darkburn
                          doom-one
+                         doom-nord-light
                          cyberpunk
-                         leuven
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Input Mono"
-                               :size 32
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -370,6 +371,7 @@ you should place your code here."
   (global-flycheck-mode 1)
   (golden-ratio-mode 1)
   (blink-cursor-mode 1)
+  (solaire-mode 1)
   (setq-default scroll-margin 6)
   ;; "Open .profile files in sh mode by default"
   (add-to-list 'auto-mode-alist '("\\.profile\\'" . sh-mode))
@@ -442,6 +444,32 @@ you should place your code here."
     )
   (global-set-key [f8] 'copy-to-clipboard)
   (global-set-key (kbd "C-S-v") 'paste-from-clipboard)
+
+  ;; DOOM STUFF
+  (require 'doom-themes)
+  (setq doom-enable-bold t    ; if nil, bolding are universally disabled
+        doom-enable-italic t  ; if nil, italics are universally disabled
+
+        ;; doom-one specific settings
+        doom-one-brighter-modeline nil
+        doom-one-brighter-comments nil)
+
+  ;; SOLAIRE MODE STUFF
+  (require 'solaire-mode)
+  ;; brighten buffers (that represent real files)
+  (add-hook 'change-major-mode-hook #'turn-on-solaire-mode)
+  ;; To enable solaire-mode unconditionally for certain modes:
+  (add-hook 'ediff-prepare-buffer-hook #'solaire-mode)
+  ;; ...if you use auto-revert-mode, this prevents solaire-mode from turning
+  ;; itself off every time Emacs reverts the file
+  ;; (add-hook 'after-revert-hook #'turn-on-solaire-mode)
+  ;; highlight the minibuffer when it is activated:
+  (add-hook 'minibuffer-setup-hook #'solaire-mode-in-minibuffer)
+  ;; if the bright and dark background colors are the wrong way around, use this
+  ;; to switch the backgrounds of the `default` and `solaire-default-face` faces.
+  ;; This should be used *after* you load the active theme!
+  ;; NOTE: This is necessary for themes in the doom-themes package!
+  (solaire-mode-swap-bg)
 
  (setq js-indent-level 2)
   ;; ;; 22 SPC-c-l      ;)
