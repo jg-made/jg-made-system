@@ -26,7 +26,7 @@ else
   fi
 fi
 SEMAPHORE_DIR_="$SEMAPHORE_DIR_COLOR%~\$(git_prompt_info) "
-SEMAPHORE_PROMPT="$SEMAPHORE_BRACKET_COLOR➭ "
+SEMAPHORE_PROMPT="$SEMAPHORE_BRACKET_COLOR"
 
 TIME="%D{%L:%M:%S}"
 MADE_SYMBOL=$'\xe2\x84\xb3'
@@ -34,7 +34,8 @@ MADE_SYMBOL=$'\xe2\x84\xb3'
 # Put it all together!
 # PROMPT="$WIP_PROMPT$SEMAPHORE_RVM_$SEMAPHORE_DIR_$SEMAPHORE_PROMPT%{$reset_color%}"
 # PROMPT="$SEMAPHORE_RVM_$SEMAPHORE_DIR_$SEMAPHORE_PROMPT%{$reset_color%}"
-PROMPT="$SEMAPHORE_DIR_$SEMAPHORE_PROMPT%{$reset_color%}"
+NEWLINE=$'\n'
+PROMPT="$SEMAPHORE_DIR_$SEMAPHORE_PROMPT%{$reset_color%}${NEWLINE}➭   "
 
 #Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
