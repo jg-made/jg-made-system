@@ -21,3 +21,5 @@ geckodriver.log
 
 .nvmrc
 TODOs.org
+
+reconcile-missing-pos.sh
