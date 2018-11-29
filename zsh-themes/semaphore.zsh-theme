@@ -19,6 +19,9 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=""
 ZSH_THEME_GIT_PROMPT_CLEAN=" $SEMAPHORE_GIT_CLEAN_COLOR✓"
 ZSH_THEME_GIT_PROMPT_DIRTY=" $SEMAPHORE_GIT_DIRTY_COLOR✗"
 
+# fancy looking M to help me orient myself when sshing across the universe
+MADE_SYMBOL=$'\xe2\x84\xb3'
+
 # Our elements:
 if [ -e ~/.rvm/bin/rvm-prompt ]; then
   SEMAPHORE_RVM_="$SEMAPHORE_DEFAULT_COLOR"["$SEMAPHORE_RVM_COLOR\${\$(~/.rvm/bin/rvm-prompt i v g)#ruby-}$SEMAPHORE_DEFAULT_COLOR"]"%{$reset_color%}"
@@ -28,10 +31,9 @@ else
   fi
 fi
 SEMAPHORE_DIR_="$SEMAPHORE_DIR_COLOR%~\$(git_prompt_info)"
-SEMAPHORE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR➭$SEMAPHORE_DEFAULT_COLOR   "
+SEMAPHORE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR$MADE_SYMBOL➭$SEMAPHORE_DEFAULT_COLOR   "
 
 TIME="%D{%L:%M:%S}"
-MADE_SYMBOL=$'\xe2\x84\xb3'
 
 
 # Put it all together!
@@ -49,4 +51,4 @@ git_custom_status() {
 }
 
 # Combine it all into a final right-side prompt
-RPS1='$(git_custom_status) $MADE_SYMBOL $EPS1 $SEMAPHORE_TIME_COLOR|$TIME|$SEMAPHORE_DEFAULT_COLOR'
+RPS1='$(git_custom_status) $EPS1 $SEMAPHORE_TIME_COLOR$TIME$SEMAPHORE_DEFAULT_COLOR'
