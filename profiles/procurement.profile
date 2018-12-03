@@ -34,13 +34,18 @@ function papiprune() {
 alias papiprune=papiprune
 
 function papidb_test(){
-    vtest && vault read secret/services/procurement/db
-    pgcli -h $(consul_test kv get service/procurement/db/host) -U procurement
+    vtest 1>/dev/null
+    PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') pgcli -h $(consul_test kv get service/procurement/db/host) -U procurement
 }
 alias papidb_test=papidb_test
 
 function papidb_prod(){
-    vprod && vault read secret/services/procurement/db
-    pgcli -h $(consul_prod kv get service/procurement/db/host) -U procurement
+    vprod 1>/dev/null
+    PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') pgcli -h $(consul_prod kv get service/procurement/db/host) -U procurement
 }
 alias papidb_test=papidb_test
+
+function papivizpdf_test(){
+    vtest 1>/dev/null
+    PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') eralchemy -i "postgresql+psycopg2://procurement@$(consul_test kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
+}
