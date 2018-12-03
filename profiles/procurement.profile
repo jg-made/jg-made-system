@@ -49,3 +49,8 @@ function papivizpdf_test(){
     vtest 1>/dev/null
     PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') eralchemy -i "postgresql+psycopg2://procurement@$(consul_test kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
 }
+
+function papivizpdf_prod(){
+    vprod 1>/dev/null
+    PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') eralchemy -i "postgresql+psycopg2://procurement@$(consul_prod kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
+}
