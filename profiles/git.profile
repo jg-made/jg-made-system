@@ -34,3 +34,5 @@ function gdcolorwords() {
     git diff --color-words;
 }
 alias gdcolorwords=gdcolorwords;
+
+alias gba='git branch --all --sort=-committerdate'

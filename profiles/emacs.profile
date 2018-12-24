@@ -1,4 +1,4 @@
-function emnw() {
+function em() {
     # Checks if there's a frame open and sets autofocus when opening files from terminal
     # https://askubuntu.com/questions/283711/application-focus-of-emacsclient-frame
     emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" -e "(progn (raise-frame) (x-focus-frame (selected-frame)))" 2> /dev/null | grep t
@@ -13,7 +13,7 @@ function emnw() {
     fi
 }
 
-function em {
+function emw {
     # Checks if there's a frame open and sets autofocus when opening files from terminal
     # https://askubuntu.com/questions/283711/application-focus-of-emacsclient-frame
     emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" -e "(progn (raise-frame) (x-focus-frame (selected-frame)))" 2> /dev/null | grep t
