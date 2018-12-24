@@ -1,5 +1,6 @@
 # Export some useful vars
 export PROCUREMENT_PROJECT_DIR=$HOME/madedotcom/procurement;
+export REQUESTS_CA_BUNDLE=$PROCUREMENT_PROJECT_DIR/fake-elb/selfsigned-ca.crt
 
 # LAZY FINGERS
 function papiworkon() {

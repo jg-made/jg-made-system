@@ -99,6 +99,7 @@ source $JG_MADE_SYSTEM/profiles/dvm.profile
 source $JG_MADE_SYSTEM/profiles/emacs.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
+source $JG_MADE_SYSTEM/profiles/hub.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
@@ -107,6 +108,7 @@ source $JG_MADE_SYSTEM/profiles/pgcli.profile
 source $JG_MADE_SYSTEM/profiles/postman.profile
 source $JG_MADE_SYSTEM/profiles/pyenv.profile
 source $JG_MADE_SYSTEM/profiles/python.profile
+source $JG_MADE_SYSTEM/profiles/rbenv.profile
 source $JG_MADE_SYSTEM/profiles/vault.profile
 source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
