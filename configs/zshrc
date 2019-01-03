@@ -120,4 +120,5 @@ source $JG_MADE_SYSTEM/profiles/jira.profile
 # MADE projects - rely on vault, consul,
 source $JG_MADE_SYSTEM/profiles/hacienda.profile
 source $JG_MADE_SYSTEM/profiles/procurement.profile
+source $JG_MADE_SYSTEM/profiles/procurement_selenium.profile
 source $JG_MADE_SYSTEM/profiles/erp.profile
