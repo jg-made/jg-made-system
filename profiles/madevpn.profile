@@ -83,6 +83,9 @@ function madevpn_start() {
         # the vpn needs a little time before we test it
         sleep 3
         madevpn_check
+
+        # the tun0 interface might have a different name different machines.
+        resolvectl domain tun0 consul
     fi
 }
 alias madevpn_start=madevpn_start;
