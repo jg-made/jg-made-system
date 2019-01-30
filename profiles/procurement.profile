@@ -39,6 +39,12 @@ function papidb_test(){
 }
 alias papidb_test=papidb_test
 
+function papidb_uat(){
+    vuat 1>/dev/null
+    PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') pgcli -h $(consul_uat kv get service/procurement/db/host) -U procurement
+}
+alias papidb_uat=papidb_uat
+
 function papidb_prod(){
     vprod 1>/dev/null
     PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') pgcli -h $(consul_prod kv get service/procurement/db/host) -U procurement
