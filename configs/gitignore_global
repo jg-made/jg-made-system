@@ -9,6 +9,8 @@
 .DS_Store
 .tern-port
 
+flycheck_*
+
 node_modules/
 
 __pycache__/
