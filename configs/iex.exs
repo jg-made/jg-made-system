@@ -7,7 +7,7 @@ IEx.configure(
       number: :light_yellow,
       atom: :light_cyan,
       string: :light_black,
-      boolean: :red, 
+      boolean: :red,
       nil: [:magenta, :bright],
     ],
     ls_directory: :cyan,
@@ -18,11 +18,11 @@ IEx.configure(
     doc_title: [:cyan, :bright, :underline],
   ],
   default_prompt:
-    "#{IO.ANSI.green}%prefix#{IO.ANSI.reset} " <>
+  "#{IO.ANSI.green}%prefix#{IO.ANSI.reset} " <>
     "[#{IO.ANSI.magenta}#{IO.ANSI.reset}" <>
     "#{IO.ANSI.cyan}%counter#{IO.ANSI.reset}] >",
   alive_prompt:
-    "#{IO.ANSI.green}%prefix#{IO.ANSI.reset} " <>
+  "#{IO.ANSI.green}%prefix#{IO.ANSI.reset} " <>
     "(#{IO.ANSI.yellow}%node#{IO.ANSI.reset}) " <>
     "[#{IO.ANSI.magenta}#{IO.ANSI.reset}" <>
     "#{IO.ANSI.cyan}%counter#{IO.ANSI.reset}] >",
@@ -36,10 +36,13 @@ IEx.configure(
 )
 
 
-# this timestamp function is not accessible from mthe iex shell for some reason
-timestamp = fn ->
-  {_date, {hour, minute, _second}} = :calendar.local_time
-  [hour, minute]
-  |> Enum.map(&(String.pad_leading(Integer.to_string(&1), 2, "0")))
-  |> Enum.join(":")
+defmodule CustomRootModuleNoMappingCollision do
+  def timestamp do
+    {_date, {hour, minute, _second}} = :calendar.local_time
+    [hour, minute]
+    |> Enum.map(&(String.pad_leading(Integer.to_string(&1), 2, "0")))
+    |> Enum.join(":")
+  end
 end
+
+alias CustomRootModuleNoMappingCollision, as: Hyu
