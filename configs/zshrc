@@ -84,7 +84,11 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+### HERE BE CUSTOM STUFF ###
+export EDITOR=emw
+
 export JG_MADE_SYSTEM="$HOME/.jg-made-system/"
+
 source $JG_MADE_SYSTEM/profiles/alarm.profile
 source $JG_MADE_SYSTEM/profiles/asdf.profile
 source $JG_MADE_SYSTEM/profiles/beep.profile
