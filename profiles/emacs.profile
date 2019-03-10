@@ -1,7 +1,7 @@
 function em() {
     emacsclient -nw "$@" 2>/dev/null
     if [ "$?" -eq "1" ]; then
-        echo 1
+        # echo 1
         emacsclient -a '' "$@"
     fi
 }
@@ -13,10 +13,10 @@ function emw {
     # emacsclient -n -e "(if (> (length (frame-list)) 1) 't)" 2> /dev/null | grep t
 
     if [ "$?" -eq "1" ]; then
-        echo 1
+        # echo 1
         emacsclient -a '' -nqc "$@"
     else
-        echo else
+        # echo else
         emacsclient -nqc "$@"
     fi
 }
