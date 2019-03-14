@@ -47,6 +47,7 @@ This function should only modify configuration layer settings."
      better-defaults
      emacs-lisp
      elixir
+     xclipboard
      (shell :variables
             shell-default-position 'right)
      (org :variables org-projectile-file "TODOs.org")
@@ -419,34 +420,6 @@ you should place your code here."
     )
   ;; (add-hook 'compilation-mode-hook 'my-compilation-hook)
   ;; (add-hook 'compilation-mode-hook 'compilation-shell-minor-mode)
-
-  ;; ;; CLIPBOARD STUFF
-  (defun copy-to-clipboard ()
-    (interactive)
-    (if (display-graphic-p)
-        (progn
-          (message "Yanked region to x-clipboard!")
-          (call-interactively 'clipboard-kill-ring-save)
-          )
-      (if (region-active-p)
-          (progn
-            (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
-            (message "Yanked region to clipboard!")
-            (deactivate-mark))
-        (message "No region active; can't yank to clipboard!")))
-    )
-  (defun paste-from-clipboard ()
-    (interactive)
-    (if (display-graphic-p)
-        (progn
-          (clipboard-yank)
-          (message "graphics active")
-          )
-      (insert (shell-command-to-string "xsel -o -b"))
-      )
-    )
-  (global-set-key [f8] 'copy-to-clipboard)
-  (global-set-key (kbd "C-S-v") 'paste-from-clipboard)
 
   ;; DOOM STUFF
   (require 'doom-themes)
