@@ -57,9 +57,11 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  elixir
   git
+  docker
+  docker-compose
   pip
+  elixir
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -113,7 +115,7 @@ source $JG_MADE_SYSTEM/profiles/rbenv.profile
 source $JG_MADE_SYSTEM/profiles/vault.profile
 source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
-source $JG_MADE_SYSTEM/profiles/zplug.profile
+# source $JG_MADE_SYSTEM/profiles/zplug.profile
 
 # jira convenience functions rely on zsh git aliases
 source $JG_MADE_SYSTEM/profiles/jira.profile
