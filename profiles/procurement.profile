@@ -33,6 +33,10 @@ function papiprune() {
 }
 alias papiprune=papiprune
 
+function papidb_local(){
+    pgcli postgres://procurement:procurement@0.0.0.0:5432/procurement
+}
+
 function papidb_test(){
     vtest 1>/dev/null
     PGPASSWORD=$(vault read secret/services/procurement/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') pgcli -h $(consul_test kv get service/procurement/db/host) -U procurement
