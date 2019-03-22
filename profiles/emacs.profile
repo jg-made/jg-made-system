@@ -1,12 +1,13 @@
-function em() {
-    emacsclient -nw "$@" 2>/dev/null
-    if [ "$?" -eq "1" ]; then
-        # echo 1
-        emacsclient -a '' "$@"
-    fi
-}
+##these functions now live in root bin so they can be my EDITOR
 
-##this function now lives in root bin so it can be my EDITOR
+# function em() {
+#     emacsclient -nw "$@" 2>/dev/null
+#     if [ "$?" -eq "1" ]; then
+#         # echo 1
+#         emacsclient -a '' "$@"
+#     fi
+# }
+
 # function emw {
 #     # Checks if there's a frame open and sets autofocus when opening files from terminal
 #     # https://askubuntu.com/questions/283711/application-focus-of-emacsclient-frame

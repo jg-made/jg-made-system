@@ -87,7 +87,8 @@ source $ZSH/oh-my-zsh.sh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 ### HERE BE CUSTOM STUFF ###
-export EDITOR=emw
+export EDITOR=em
+export VISUAL=em
 
 export JG_MADE_SYSTEM="$HOME/.jg-made-system/"
 
