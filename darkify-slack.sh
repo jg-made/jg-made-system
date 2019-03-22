@@ -1,7 +1,8 @@
 #!/bin/bash
 
 SLACK_PATH='/usr/lib/slack'
-CSS_URL='https://raw.githubusercontent.com/laCour/slack-night-mode/master/css/raw/variants/black-monospaced.css'
+# CSS_URL='https://raw.githubusercontent.com/laCour/slack-night-mode/master/css/raw/variants/black-monospaced.css'
+CSS_URL='https://raw.githubusercontent.com/brandonreid/slack-night-mode/master/css/raw/variants/black-monospaced.css'
 
 sudo bash -c "cat >> \"${SLACK_PATH}\"/resources/app.asar.unpacked/src/static/ssb-interop.js" << EOF
 document.addEventListener('DOMContentLoaded', function() {
