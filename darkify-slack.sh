@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
  $.ajax({
    url: '${CSS_URL}',
    success: function(css) {
-     overrides = `
+     overrides = \`
         .p-threads_view {
             background: #222;
         }
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .p-threads_view__default_background {
             background: rgba(255, 255, 255, 0.05);
         }
-    `
+    \`
     \$("<style></style>").appendTo('head').html(css + overrides);
    }
  });
