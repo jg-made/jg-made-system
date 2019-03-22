@@ -1,51 +1,45 @@
 #!/bin/bash
 
 SLACK_PATH='/usr/lib/slack'
-CSS_URL='https://cdn.rawgit.com/laCour/slack-night-mode/master/css/raw/variants/black-monospaced.css'
+CSS_URL='https://raw.githubusercontent.com/laCour/slack-night-mode/master/css/raw/variants/black-monospaced.css'
 
 sudo bash -c "cat >> \"${SLACK_PATH}\"/resources/app.asar.unpacked/src/static/ssb-interop.js" << EOF
 document.addEventListener('DOMContentLoaded', function() {
  $.ajax({
    url: '${CSS_URL}',
    success: function(css) {
-     \$("<style></style>").appendTo('head').html(css);
-   }
- });
-});
-EOF
-
-sudo bash -c "cat >> \"${SLACK_PATH}\"/resources/app.asar.unpacked/src/static/index.js" << EOF
-document.addEventListener('DOMContentLoaded', function() {
- $.ajax({
-   url: '${CSS_URL}',
-   success: function(css) {
-     \$("<style></style>").appendTo('head').html(css);
-   }
- });
-});
-EOF
-
-sudo bash -c "cat >> \"${SLACK_PATH}\"/resources/app.asar.unpacked/src/static/ssb-interop.js" << EOF
-document.addEventListener('DOMContentLoaded', function() {
- $.ajax({
-   url: '${CSS_URL}',
-   success: function(css) {
-     css += \`
-       div.c-virtual_list__scroll_container {
-           background-color: #222222 !important;
-       }
-       .p-message_pane .c-message_list:not(.c-virtual_list--scrollbar), .p-message_pane .c-message_list.c-virtual_list--scrollbar > .c-scrollbar__hider {
-            z-index: 0;
-       }
-       div.c-message__content:hover {
-           background-color: #222222 !important;
-       }
-
-       div.c-message:hover {
-           background-color: #222222 !important;
-       }
-     \`;
-     \$("<style></style>").appendTo('head').html(css);
+     overrides = `
+        .p-threads_view {
+            background: #222;
+        }
+        .p-threads_view__divider_line {
+            border-color: #111;
+        }
+        .p-threads_view__divider_label {
+            background: #111;
+        }
+        .p-threads_view_header__channel_name {
+            color: #c7c7c7;
+        }
+        .p-threads_view_root {
+            border-color: #444;
+        }
+        .p-threads_view_reply {
+            border-color: #444;
+        }
+        .p_threads_view_load_newer_button,
+        .p_threads_view_load_older_button {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #444;
+        }
+        .p-threads_view__footer {
+            border-color: #444;
+        }
+        .p-threads_view__default_background {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    `
+    \$("<style></style>").appendTo('head').html(css + overrides);
    }
  });
 });
