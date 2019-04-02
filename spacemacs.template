@@ -179,6 +179,7 @@ It should only modify the values of Spacemacs settings."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          doom-one
+                         spacemacs-dark
                          doom-nord-light
                          cyberpunk
                          )
@@ -186,11 +187,6 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Input Mono"
-   ;;                             :size 32
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.1)
    dotspacemacs-default-font '("Noto Mono"
                                :size 16
                                :weight normal
@@ -375,16 +371,20 @@ you should place your code here."
   (setq-default scroll-margin 10)
   ;; "Open .profile files in sh mode by default"
   (add-to-list 'auto-mode-alist '("\\.profile\\'" . sh-mode))
-  ;; "Open Dockerfile files in dockerfile mode by default"
-  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
   ;; "Open Jenkinsfile files in groovy-mode by default"
   (add-to-list 'auto-mode-alist '("Jenkinsfile$" . groovy-mode))
   ;; "Open HCL files in hcl-mode by default"
   (add-to-list 'auto-mode-alist '("\\.hcl\\'" . hcl-mode))
-  ;; "Get SPC-f-f `/docker:' docker tramp to autocomplete names"
-  (setq docker-tramp-use-names t)
   ;; "https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7""
   (evil-leader/set-key "q q" 'spacemacs/frame-killer)
+
+  "DOCKER/TRAMP STUFF"
+  ;; "Open Dockerfile files in dockerfile mode by default"
+  (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+  ;; "Get SPC-f-f `/docker:' docker tramp to autocomplete names"
+  (setq docker-tramp-use-names t)
+  ;; fix tramp hanging on alpine containers as per https://github.com/emacs-pe/docker-tramp.el
+  (require 'docker-tramp-compat)
 
   "PYTHON STUFF"
   (defun projectile-pyenv-mode-set ()
@@ -427,8 +427,8 @@ you should place your code here."
         doom-enable-italic t  ; if nil, italics are universally disabled
 
         ;; doom-one specific settings
-        doom-one-brighter-modeline nil
-        doom-one-brighter-comments nil)
+        doom-one-brighter-modeline t
+        doom-one-brighter-comments t)
 
   ;; SOLAIRE MODE STUFF
   (require 'solaire-mode)
