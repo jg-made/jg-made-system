@@ -5,7 +5,7 @@ export NVM_DIR="$HOME/.nvm"
 autoload -U add-zsh-hook
 load-nvmrc() {
     local node_version="$(nvm version)"
-    local nvmrc_path="$(nvm_find_nvmrc > /dev/null)"
+    local nvmrc_path="$(nvm_find_nvmrc)"
 
     if [ -n "$nvmrc_path" ]; then
         local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
