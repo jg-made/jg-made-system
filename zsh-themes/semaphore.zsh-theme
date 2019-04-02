@@ -41,4 +41,5 @@ git_custom_status() {
 SEMAPHORE_TIME="$SEMAPHORE_TIME_COLOR%D{%K:%M:%S}$SEMAPHORE_DEFAULT_COLOR"
 
 # Put node version (nvm) and time on right hand side prompt
-RPS1='$SEMAPHORE_NVM_COLOR [node-$(nvm_prompt_info)]$SEMAPHORE_DEFAULT_COLOR $(git_custom_status) $SEMAPHORE_TIME'
+#RPS1='$SEMAPHORE_NVM_COLOR [node-$(nvm_prompt_info)]$SEMAPHORE_DEFAULT_COLOR $(git_custom_status) $SEMAPHORE_TIME'
+RPS1='$(git_custom_status) $SEMAPHORE_TIME'
