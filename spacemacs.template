@@ -365,7 +365,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   "GENERAL STUFF"
   (global-flycheck-mode 1)
-  ;; (golden-ratio-mode 1)
+  (golden-ratio-mode 1)
+  (linum-relative-mode 1)
   (blink-cursor-mode 1)
   (solaire-mode 1)
   (setq-default scroll-margin 10)
