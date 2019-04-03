@@ -33,7 +33,7 @@ PROMPT="$SEMAPHORE_LHS$SEMAPHORE_NEWLINE_PROMPT"
 git_custom_status() {
   local cb=$(git_current_branch)
   if [ -n "$cb" ]; then
-    echo "%{$fg_bold[yellow]%}$(work_in_progress)%{$reset_color%}"
+    echo "%{$fg_bold[red]%}$(work_in_progress)%{$reset_color%}"
   fi
 }
 
