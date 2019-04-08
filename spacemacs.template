@@ -423,7 +423,17 @@ you should place your code here."
   ;; (add-hook 'compilation-mode-hook 'compilation-shell-minor-mode)
 
   ;; DOOM STUFF
-  (require 'doom-themes)
+  (use-package doom-themes
+    :init (load-theme 'doom-one t)
+    :config
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config)
+
+    ;; Enable custom treemacs theme (all-the-icons must be installed!)
+    (doom-themes-treemacs-config))
   (setq doom-enable-bold t    ; if nil, bolding are universally disabled
         doom-enable-italic t  ; if nil, italics are universally disabled
 
