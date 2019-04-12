@@ -23,9 +23,9 @@ ZSH_THEME_GIT_PROMPT_DIRTY=" $SEMAPHORE_GIT_DIRTY_COLOR✗$SEMAPHORE_DEFAULT_COL
 MADE_SYMBOL=$'\xe2\x84\xb3'
 
 # the left hand side prompt
-SEMAPHORE_LHS="$STY$SEMAPHORE_DIR_COLOR%~\$(git_prompt_info)"
+SEMAPHORE_LHS="$SEMAPHORE_DIR_COLOR%~\$(git_prompt_info)"
 # newline at the end for ease of reading commands
-SEMAPHORE_NEWLINE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR$MADE_SYMBOL➭$SEMAPHORE_DEFAULT_COLOR   "
+SEMAPHORE_NEWLINE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR $MADE_SYMBOL➭$SEMAPHORE_DEFAULT_COLOR   "
 # final multiline prompt
 PROMPT="$SEMAPHORE_LHS$SEMAPHORE_NEWLINE_PROMPT"
 
@@ -42,4 +42,5 @@ SEMAPHORE_TIME="$SEMAPHORE_TIME_COLOR%D{%K:%M:%S}$SEMAPHORE_DEFAULT_COLOR"
 
 # Put node version (nvm) and time on right hand side prompt
 #RPS1='$SEMAPHORE_NVM_COLOR [node-$(nvm_prompt_info)]$SEMAPHORE_DEFAULT_COLOR $(git_custom_status) $SEMAPHORE_TIME'
-RPS1='$(git_custom_status) $SEMAPHORE_TIME'
+#RPS1='$(git_custom_status) $SEMAPHORE_TIME'
+RPS1='$(git_custom_status)'
