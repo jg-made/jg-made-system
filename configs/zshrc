@@ -126,3 +126,6 @@ source $JG_MADE_SYSTEM/profiles/hacienda.profile
 source $JG_MADE_SYSTEM/profiles/procurement.profile
 #source $JG_MADE_SYSTEM/profiles/procurement_selenium.profile
 source $JG_MADE_SYSTEM/profiles/erp.profile
+
+# true lazyfingers
+source $JG_MADE_SYSTEM/profiles/good_morning.profile
