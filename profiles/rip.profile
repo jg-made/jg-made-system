@@ -75,3 +75,8 @@ function riptoken_prod(){
     vprod 1>/dev/null
     (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 2099-12-31T23:59:59)
 }
+
+function rip_manual_migration_test(){
+    vtest 1>/dev/null
+    DB_HOST=$(consul_test kv get service/rip/db/host) DB_PASSWORD=$(vault read secret/services/rip/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') DB_PORT=5432 ./manual_migration.sh
+}
