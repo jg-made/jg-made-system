@@ -39,28 +39,28 @@ function papidb_local(){
 
 function papidb_test(){
     vtest 1>/dev/null
-    PGPASSWORD=$(vault_password secret/services/procurement/db) pgcli -h $(consul_env test kv get service/procurement/db/host) -U procurement
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env test kv get service/procurement/db/host) -U procurement
 }
 alias papidb_test=papidb_test
 
 function papidb_uat(){
     vuat 1>/dev/null
-    PGPASSWORD=$(vault_password secret/services/procurement/db) pgcli -h $(consul_env uat kv get service/procurement/db/host) -U procurement
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env uat kv get service/procurement/db/host) -U procurement
 }
 alias papidb_uat=papidb_uat
 
 function papidb_prod(){
     vprod 1>/dev/null
-    PGPASSWORD=$(vault_password secret/services/procurement/db) pgcli -h $(consul_env prod kv get service/procurement/db/host) -U procurement
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env prod kv get service/procurement/db/host) -U procurement
 }
 alias papidb_test=papidb_test
 
 function papivizpdf_test(){
     vtest 1>/dev/null
-    PGPASSWORD=$(vault_password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env test kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env test kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
 }
 
 function papivizpdf_prod(){
     vprod 1>/dev/null
-    PGPASSWORD=$(vault_password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env prod kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env prod kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
 }

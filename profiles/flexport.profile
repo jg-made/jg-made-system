@@ -2,8 +2,8 @@ function flexport_env() {
     flexport_env_name=$1
     shift 1
     DB_HOST=$(consul_env $flexport_env_name kv get service/procurement/db/host)
-    DB_PASSWORD=$(vault_password secret/services/procurement/db)
-    FLEXPORT_TOKEN=$(vault_token secret/services/procurement/flexport)
+    DB_PASSWORD=$(vault_grep password secret/services/procurement/db)
+    FLEXPORT_TOKEN=$(vault_grep token secret/services/procurement/flexport)
     FLEXPORT_API_URL='https://api.flexport.com/'
     echo DB_HOST: $DB_HOST
     echo DB_PASSWORD: $DB_PASSWORD
