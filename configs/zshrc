@@ -129,3 +129,4 @@ source $JG_MADE_SYSTEM/profiles/procurement.profile
 #source $JG_MADE_SYSTEM/profiles/procurement_selenium.profile
 source $JG_MADE_SYSTEM/profiles/erp.profile
 source $JG_MADE_SYSTEM/profiles/rip.profile
+source $JG_MADE_SYSTEM/profiles/flexport.profile
