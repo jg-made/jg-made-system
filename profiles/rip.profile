@@ -78,5 +78,5 @@ function riptoken_prod(){
 
 function rip_manual_migration_test(){
     vtest 1>/dev/null
-    DB_HOST=$(consul_test kv get service/rip/db/host) DB_PASSWORD=$(vault read secret/services/rip/db | grep -o -e '^password.*$' | grep -o -e '[^ ]*$') DB_PORT=5432 ./manual_migration.sh
+    DB_HOST=$(consul_test kv get service/rip/db/host) DB_PASSWORD=$(vault_password secret/services/rip/db) DB_PORT=5432 ./manual_migration.sh
 }
