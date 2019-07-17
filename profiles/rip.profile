@@ -34,7 +34,7 @@ function ripprune() {
 alias ripprune=ripprune
 
 function ripdb_local(){
-    pgcli postgres://rip:rip@0.0.0.0:5432/rip
+    docker exec -i -t $(docker ps -q -f "name=rip_postgres.*") psql -U rip
 }
 
 function ripdb_test(){
