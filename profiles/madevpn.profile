@@ -73,9 +73,9 @@ function madevpn_start() {
         sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
 
         # the vpn needs a little time to connect before we delete the secret auth file
-        sleep 8
+        # sleep 8
 
-        sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
+        # sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
 
         # the vpn needs a little time before we test it
         sleep 5
