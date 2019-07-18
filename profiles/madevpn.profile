@@ -36,11 +36,7 @@ function madevpn_start() {
     then
         echo "madevpn already running...";
     else
-        echo 'enter the base_password': 
-
-        read -s base_password
-
-        echo "thanks, now please wait up to 30 seconds for secret key to change..."
+        echo "please wait up to 30 seconds for secret key to change..."
 
         source <(sudo cat $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile)
 
@@ -52,8 +48,6 @@ function madevpn_start() {
         do
             sleep 1
         done
-
-        echo $base_password | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_base_password > /dev/null;
 
         unset base_password
 
@@ -68,7 +62,6 @@ function madevpn_start() {
 
         sudo cat $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name $JG_MADE_SYSTEM/auths/madevpn/.secret_password | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt > /dev/null;
 
-        sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_base_password;
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_key;
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_password;
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name;
