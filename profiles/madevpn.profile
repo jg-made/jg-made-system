@@ -44,7 +44,7 @@ function madevpn_start() {
 
         source $JG_MADE_SYSTEM/auths/unset/madevpn.profile;
 
-        while (screen -ls | grep -q madevpn_secretkey)
+        while (sudo screen -ls | grep -q madevpn_secretkey)
         do
             sleep 1
         done
