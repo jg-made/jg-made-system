@@ -104,6 +104,7 @@ source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dns.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
 source $JG_MADE_SYSTEM/profiles/emacs.profile
+source $JG_MADE_SYSTEM/profiles/eventstore.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
