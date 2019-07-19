@@ -78,7 +78,7 @@ function madevpn_start() {
         # sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
 
         # the vpn needs a little time before we test it
-        sleep 5
+        sleep 8
         madevpn_check
 
         # the tun0 interface might have a different name different machines.
