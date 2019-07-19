@@ -12,10 +12,10 @@ function ripkill() {
     read -k 1 "confirmkill?kill all RIP containers\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirmkill in
-    [Yy]* )
-        docker container kill $(docker ps -q -f "name=rip.*") 1>/dev/null
-        ;;
-    * ) ;;
+        [Yy]* )
+            docker container kill $(docker ps -q -f "name=rip.*") 1>/dev/null
+            ;;
+        * ) ;;
     esac
 }
 alias ripkill=ripkill
@@ -25,10 +25,10 @@ function ripprune() {
     read -k 1 "confirmprune?prune all rip containers\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirmprune in
-    [Yy]* )
-        docker container rm -f $(docker ps -a -q -f "name=rip.*")
-        ;;
-    * ) ;;
+        [Yy]* )
+            docker container rm -f $(docker ps -a -q -f "name=rip.*")
+            ;;
+        * ) ;;
     esac
 }
 alias ripprune=ripprune
