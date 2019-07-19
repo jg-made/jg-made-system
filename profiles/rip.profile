@@ -80,3 +80,25 @@ function rip_manual_migration_test(){
     vtest 1>/dev/null
     DB_HOST=$(consul_env test kv get service/rip/db/host) DB_PASSWORD=$(vault_grep password secret/services/rip/db) DB_PORT=5432 ./manual_migration.sh
 }
+
+function rip_get_returnable_lines(){
+    PGPASSWORD=$(vault_grep password secret/services/rip/db) \
+              psql -h $(consul_env test kv get service/rip/db/host) -U rip -t -c \
+              "select op.order_id, ol.sku, ol.item_id \
+from order_placed as op \
+join dispatches as di on di.order_id = op.order_id \
+join order_lines as ol on ol.order_surrogate_id = op.surrogate_id \
+group by op.order_id, ol.sku, ol.item_id\
+;" \
+        | sed -e 's/|/\n/g' \
+        | xargs -n 3 -l sh -c \
+                'HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) \
+./scripts/http_auth_token_generator.py $0 \
+--quiet=True \
+--autocopy=False \
+| xargs -I token \
+curl -s 'http://rip.made-test.com/orders/token' \
+&& echo { && echo \"order_id\": \"$0\", && echo \"sku\": \"$1\", && echo \"item_id\": \"$2\", && echo }' \
+        | grep -e 'returnable\":true' -A 5 \
+        | grep -e '^{$' -A 4
+}
