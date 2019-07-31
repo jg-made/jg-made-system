@@ -29,3 +29,13 @@ function jview() {
 function jjview() {
     jview $(git_current_branch | grep -o -e '[^0-9]*[0-9]*')
 }
+
+function what_am_i_doing() {
+    JIRA_BOARD=36
+    JIRA_NAME=$(jira session | grep -e '^name' | grep -o '[a-z]*[\.].*$')
+    echo "Fetching any issues on board #$JIRA_BOARD assigned to you...$JIRA_NAME"
+    echo "ACTIVE"
+    jira req "/rest/agile/1.0/board/$JIRA_BOARD/issue?jql=statusCategory=4%20AND%20assignee%20%3D%20$JIRA_NAME" -t table
+    echo "BACKLOG"
+    jira req "/rest/agile/1.0/board/$JIRA_BOARD/issue?jql=statusCategory=2%20AND%20assignee%20%3D%20$JIRA_NAME" -t table
+}
