@@ -108,6 +108,7 @@ source $JG_MADE_SYSTEM/profiles/eventstore.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
+source $JG_MADE_SYSTEM/profiles/lazyfingers.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
