@@ -108,7 +108,6 @@ source $JG_MADE_SYSTEM/profiles/eventstore.profile
 source $JG_MADE_SYSTEM/profiles/go.profile
 source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
-source $JG_MADE_SYSTEM/profiles/lazyfingers.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 source $JG_MADE_SYSTEM/profiles/nvm.profile
@@ -132,3 +131,8 @@ source $JG_MADE_SYSTEM/profiles/procurement.profile
 source $JG_MADE_SYSTEM/profiles/erp.profile
 source $JG_MADE_SYSTEM/profiles/rip.profile
 source $JG_MADE_SYSTEM/profiles/flexport.profile
+
+#PUT LAZYFINGERS LAST
+#Use lazyfingers for the stupid lazy i-hate-both-typing-and-thinking functions
+#Put it last so it knows about all the other good functions and can play with them
+source $JG_MADE_SYSTEM/profiles/lazyfingers.profile
