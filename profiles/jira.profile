@@ -30,7 +30,7 @@ function jjview() {
     jview $(git_current_branch | grep -o -e '[^0-9]*[0-9]*')
 }
 
-function what_am_i_doing() {
+function jira_what_am_i_doing() {
     JIRA_BOARD=36
     JIRA_NAME=$(jira session | grep -e '^name' | grep -o '[a-z]*[\.].*$')
     echo "Fetching any issues on board #$JIRA_BOARD assigned to you...$JIRA_NAME"
