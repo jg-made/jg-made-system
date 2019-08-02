@@ -5,6 +5,7 @@ export MADEVPN_SCREEN_NAME=madevpn;
 function maybe_i_should_stop_using_ubuntu() {
     resolvectl domain tun0 consul
 }
+alias maybe_i_should_stop_using_ubuntu=maybe_i_should_stop_using_ubuntu
 
 function madevpn_check() {
     if [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" https://portus.made.com) -eq 200 ]
@@ -62,6 +63,7 @@ function madevpn_start() {
 
         sudo cat $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name $JG_MADE_SYSTEM/auths/madevpn/.secret_password | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt > /dev/null;
 
+        # TODO @jg-made change this dangerous stuff because e.g. what if JG_MADE_SYSTEM=="/ "?
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_key;
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_password;
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret_user_name;
@@ -72,11 +74,6 @@ function madevpn_start() {
 
         sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
 
-        # the vpn needs a little time to connect before we delete the secret auth file
-        # sleep 8
-
-        # sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret*;
-
         # the vpn needs a little time before we test it
         sleep 8
         madevpn_check
@@ -86,3 +83,9 @@ function madevpn_start() {
     fi
 }
 alias madevpn_start=madevpn_start;
+
+function madevpn_restart() {
+    madevpn_kill;
+    madevpn_start;
+}
+alias madevpn_restart=madevpn_restart;
