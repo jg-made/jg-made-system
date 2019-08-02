@@ -13,14 +13,14 @@ function flexport_env() {
 }
 
 function flexport_env_test(){
-    vtest;
+    echo "I hope you ran `vtest`"
     flexport_env test $@;
 }
 function flexport_env_uat(){
-    vuat;
+    echo "I hope you ran `vuat`"
     flexport_env uat $@;
 }
 function flexport_env_prod(){
-    vprod;
+    echo "I hope you ran `vprod`"
     flexport_env prod $@;
 }
