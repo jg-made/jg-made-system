@@ -36,44 +36,32 @@ alias ripprune=ripprune
 function ripdb_local(){
     docker exec -i -t $(docker ps -q -f "name=rip_postgres.*") psql -U rip
 }
+alias ripdb_local=ripdb_local;
 
-function ripdb_test(){
-    echo "I hope you ran `vtest`"
-    PGPASSWORD=$(vault_grep password secret/services/rip/db) pgcli -h $(consul_env test kv get service/rip/db/host) -U rip
+function ripdb(){
+    advise_vault_login;
+    PGPASSWORD=$(vault_grep password secret/services/rip/db) pgcli -h $(consul_env $MADE_ENV kv get service/rip/db/host) -U rip;
 }
-alias ripdb_test=ripdb_test
+alias ripdb=ripdb;
 
-function ripdb_uat(){
-    echo "I hope you ran `vuat`"
-    PGPASSWORD=$(vault_grep password secret/services/rip/db) pgcli -h $(consul_env uat kv get service/rip/db/host) -U rip
+function ripvizpdf(){
+    advise_vault_login;
+    PGPASSWORD=$(vault_grep password secret/services/rip/db) eralchemy -i "postgresql+psycopg2://rip@$(consul_env $MADE_ENV kv get service/rip/db/host)" -o ~/Desktop/ripvizpdf_$(date +%F_%T).pdf;
 }
-alias ripdb_uat=ripdb_uat
-
-function ripdb_prod(){
-    echo "I hope you ran `vprod`"
-    PGPASSWORD=$(vault_grep password secret/services/rip/db) pgcli -h $(consul_env prod kv get service/rip/db/host) -U rip
-}
-alias ripdb_test=ripdb_test
-
-function ripvizpdf_test(){
-    echo "I hope you ran `vtest`"
-    PGPASSWORD=$(vault_grep password secret/services/rip/db) eralchemy -i "postgresql+psycopg2://rip@$(consul_env test kv get service/rip/db/host)" -o ~/Desktop/ripvizpdf_$(date +%F_%T).pdf
-}
-
-function ripvizpdf_prod(){
-    echo "I hope you ran `vprod`"
-    PGPASSWORD=$(vault_grep password secret/services/rip/db) eralchemy -i "postgresql+psycopg2://rip@$(consul_env prod kv get service/rip/db/host)" -o ~/Desktop/ripvizpdf_$(date +%F_%T).pdf
-}
+alias ripvizpdf=ripvizpdf;
 
 function riptoken(){
-    echo "Make sure you are logged into vault!"
-    (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 2099-12-31T23:59:59)
+    advise_vault_login;
+    # TODO @jg-make this work locally too
+    (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 2099-12-31T23:59:59);
 }
+alias rip_token=rip_token;
 
-function rip_manual_migration_test(){
-    echo "I hope you ran `vtest`"
-    DB_HOST=$(consul_env test kv get service/rip/db/host) DB_PASSWORD=$(vault_grep password secret/services/rip/db) DB_PORT=5432 ./manual_migration.sh
+function rip_manual_migration(){
+    advise_vault_login;
+    DB_HOST=$(consul_env $MADE_ENV kv get service/rip/db/host) DB_PASSWORD=$(vault_grep password secret/services/rip/db) DB_PORT=5432 ./manual_migration.sh;
 }
+alias rip_manual_migration=rip_manual_migration
 
 function rip_get_returnable_lines(){
     PGPASSWORD=$(vault_grep password secret/services/rip/db) \

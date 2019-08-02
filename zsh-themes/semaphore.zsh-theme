@@ -12,6 +12,7 @@ SEMAPHORE_GIT_CLEAN_COLOR="%{$fg[green]%}"
 SEMAPHORE_GIT_DIRTY_COLOR="%{$fg[red]%}"
 SEMAPHORE_TIME_COLOR="%{$fg[yellow]%}"
 SEMAPHORE_PRP_COLOR="%{$fg[magenta]%}"
+SEMAPHORE_ENV_COLOR="%{$fg[magenta]%}"
 
 # These Git variables are used by the oh-my-zsh git_prompt_info helper:
 ZSH_THEME_GIT_PROMPT_PREFIX="$SEMAPHORE_DEFAULT_COLOR:$SEMAPHORE_GIT_BRANCH_COLOR"
@@ -25,7 +26,7 @@ MADE_SYMBOL=$'\xe2\x84\xb3'
 # the left hand side prompt
 SEMAPHORE_LHS="$SEMAPHORE_DIR_COLOR%~\$(git_prompt_info)"
 # newline at the end for ease of reading commands
-SEMAPHORE_NEWLINE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR $MADE_SYMBOL➭$SEMAPHORE_DEFAULT_COLOR   "
+SEMAPHORE_NEWLINE_PROMPT="${NEWLINE}$SEMAPHORE_PRP_COLOR$(cat $HOME/.made_env)_$MADE_SYMBOL➭$SEMAPHORE_DEFAULT_COLOR   "
 # final multiline prompt
 PROMPT="$SEMAPHORE_LHS$SEMAPHORE_NEWLINE_PROMPT"
 

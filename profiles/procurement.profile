@@ -36,46 +36,26 @@ alias papiprune=papiprune
 function papidb_local(){
     pgcli postgres://procurement:procurement@0.0.0.0:5432/procurement
 }
+alias papidb_local=papidb_local
 
-function papidb_test(){
-    echo "I hope you ran `vtest`"
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env test kv get service/procurement/db/host) -U procurement
+function papidb(){
+    advise_vault_login;
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env $MADE_ENV kv get service/procurement/db/host) -U procurement
 }
-alias papidb_test=papidb_test
+alias papidb=papidb;
 
-function papidb_uat(){
-    echo "I hope you ran `vuat`"
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env uat kv get service/procurement/db/host) -U procurement
+function papivizpdf(){
+    advise_vault_login;
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env $MADE_ENV kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf;
 }
-alias papidb_uat=papidb_uat
+alias papivizpdf=papivizpdf;
 
-function papidb_prod(){
-    echo "I hope you ran `vprod`"
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env prod kv get service/procurement/db/host) -U procurement
-}
-alias papidb_test=papidb_test
-
-function papivizpdf_test(){
-    echo "I hope you ran `vtest`"
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env test kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
-}
-
-function papivizpdf_prod(){
-    echo "I hope you ran `vprod`"
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env prod kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf
-}
-
-function papipg_dump_test(){
+function papipg_dump(){
+    advise_vault_login;
     # https://dba.stackexchange.com/questions/55291/copy-postgresql-database-from-a-remote-server
-    # you might have to do this:
-    # createdb papi_test -U procurement
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pg_dump -h $(consul_env test kv get service/procurement/db/host) -U procurement | psql -h localhost -d papi_test -U procurement
+    # you might have to do something like this:
+    # createdb "papi_$MADE_ENV" -U procurement
+    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pg_dump -h $(consul_env $MADE_ENV kv get service/procurement/db/host) -U procurement | psql -h localhost -d papi -U procurement
     # READ THIS: http://www.postgresqltutorial.com/postgresql-rename-database/
 }
-
-function papipg_dump_prod(){
-    # you might have to do this:
-    # createdb papi_prod -U procurement
-    PGPASSWORD=$(vault_grep password secret/services/procurement/db) pg_dump -h $(consul_env prod kv get service/procurement/db/host) -U procurement | psql -h localhost -d papi_prod -U procurement
-    # READ THIS: http://www.postgresqltutorial.com/postgresql-rename-database/
-}
+alias papipg_dump=papipg_dump;

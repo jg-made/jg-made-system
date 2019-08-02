@@ -8,7 +8,7 @@ alias bluejeans=bluejeans
 
 function bluejeans_OLD() {
   if (screen -ls | grep -q $BLUEJEANS_SCREEN_NAME)
-  then 
+  then
     echo "bluejeans already running...";
   else
     echo "starting bluejeans...";
@@ -19,7 +19,7 @@ alias bluejeans=bluejeans
 
 function bluejeans_kill() {
   if (screen -ls | grep -q $BLUEJEANS_SCREEN_NAME)
-  then 
+  then
     screen -S $BLUEJEANS_SCREEN_NAME -X quit
     echo "bluejeans killed";
   fi
