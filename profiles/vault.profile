@@ -21,3 +21,5 @@ function advise_vault_login() {
     echo "NB!!! make sure you ran \`vault_login\`"
 }
 alias advise_vault_login=advise_vault_login
+
+export_vault_addr
