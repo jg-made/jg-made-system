@@ -63,7 +63,7 @@ function rip_manual_migration(){
 }
 alias rip_manual_migration=rip_manual_migration
 
-function rip_get_returnable_lines(){
+function rip_get_returnable_lines_test(){
     PGPASSWORD=$(vault_grep password secret/services/rip/db) \
               psql -h $(consul_env test kv get service/rip/db/host) -U rip -t -c \
               "select op.order_id, ol.sku, ol.item_id \
@@ -84,3 +84,4 @@ curl -s 'http://rip.made-test.com/orders/token' \
         | grep -e 'returnable\":true' -A 5 \
         | grep -e '^{$' -A 4
 }
+alias rip_get_returnable_lines_test=rip_get_returnable_lines_test
