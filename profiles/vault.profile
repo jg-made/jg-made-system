@@ -3,7 +3,7 @@
 export VAULT_ADDR=http://active.vault.service.$MADE_ENV.consul:8200;
 
 function vault_login() {
-    set_and_print_made_env;
+    madeenv;
     export VAULT_ADDR=http://active.vault.service.$MADE_ENV.consul:8200;
     token=`sudo cat $JG_MADE_SYSTEM/auths/vault/github_token`;
     vault login -method=github token=$token;
@@ -16,7 +16,7 @@ function vault_grep() {
 alias vault_grep=vault_grep
 
 function advise_vault_login() {
-    set_and_print_made_env;
+    madeenv;
     echo "NB!!! make sure you ran \`vault_login\`"
 }
 alias advise_vault_login=advise_vault_login
