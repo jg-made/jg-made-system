@@ -74,7 +74,7 @@ function madevpn_start() {
 
         sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
 
-        # the vpn needs a little time before we test it
+        # the vpn needs a little time before we check it
         sleep 8
         madevpn_check
 
