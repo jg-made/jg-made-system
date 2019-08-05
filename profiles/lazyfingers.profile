@@ -9,11 +9,10 @@ function good_morning(){
     # update spacemacs
     cd ~/.emacs.d; gco develop; gfa; gl; gco jg-made; grb develop; cd ~;
 
-    # open spacemacs
-    emw ~;
+    # start emacs server
+    emacs --daemon;
 
     # open screen
-    # screen -dRR;
     screen -d -m -S good_morning;
     screen -S good_morning -X stuff 'jira_what_am_i_doing'$(echo -ne '\015')
     screen -r;
