@@ -6,6 +6,15 @@ JFYI I am currently using `ubuntu 19.04`.
 If you just want to browse the repo for useful stuff, I advise looking at the files in `profiles/`.
 The file names indicate what they pertain to. For example, if you want to see how I am able to connect to the procurement database with such ease, maybe you want to read `profiles/procurement.profile`.
 
+#### Best Features:
+- `jira_what_am_doing` see what the business wants from you without leaving the comfort of your nice dark terminal.
+- `jira_papi_in_progress` see what the procurement space pirates are doing.
+- `madeenv` switch between TEST, PROD and UAT `$MADE_ENV` with ease. There is even a zsh theme to display current `$MADE_ENV`!
+- `papidb`/`ripdb` connect to procurement/RIP databases with minimal effort
+- `madevpn_restart` restart the dang ol' VPN with minimal effort.
+- `madevpn_check` see if the VPN is actually up (sometimes VPN works but consul/vault have decided that you suck and aren't talking to you)
+- `vault_login` access vault in an intelligent way, checking the `$VAULT_ADDR` matches current `$MADE_ENV` and avoiding repeated login requests which I think make consul/vault unhappy.
+
 # THE FIVE HEAVENLY LEVELS OF NINJA, A BATTLE OF INCREASING DIFFICULTY, VICTORY WITH DILLIGENCE
 
 ### STEP_0
