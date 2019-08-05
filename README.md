@@ -1,6 +1,12 @@
 ![hacienda ninja](https://github.com/jg-made/jg-made-system/blob/master/img/hacienda-ninja.png)
 
 Disclaimer: this repo exists just for @jg-made to do dev work for made. Use any part of it at your own risk.
+JFYI I am currently using `ubuntu 19.04`.
+
+If you just want to browse the repo for useful stuff, I advise looking at the files in `profiles/`.
+The file names indicate what they pertain to. For example, if you want to see how I am able to connect to the procurement database with such ease, maybe you want to read `profiles/procurement.profile`.
+
+# THE FIVE HEAVENLY LEVELS OF NINJA, A BATTLE OF INCREASING DIFFICULTY, VICTORY WITH DILLIGENCE
 
 ### STEP_0
 ```
@@ -19,8 +25,13 @@ Ensure you have vault, consul and Jira CLI installed:
 
 ### STEP_3
 Symlink the stuff in `configs` to where they need to go. Just look up their names on the internet.
-For example: `ln -s ~/.jg-made-system/configs/zshrc ~/.zshrc` might be the most important symlink to do.
 Some of these configs you won't need (e.g. maybe you don't use `screen` like me).
+The sylink you probably want the most is: 
+```
+ln -s ~/.jg-made-system/configs/zshrc ~/.zshrc
+```
+If you are using my `zshrc`, you almost certainly will want to remove some stuff (it's all in the `#CUSTOM` section) such as me setting my `EDITOR` to a custom binary called `em`. In `zshrc` you will probably also want to comment out certain sourced "profiles". If in doubt, comment it out.
+Read any config before you use it!
 
 ### STEP_4
 Create a ROOT-ONLY (use `sudo mkdir` and `sudo touch`) `auths` directory in this project root. It should minimally look like this:
