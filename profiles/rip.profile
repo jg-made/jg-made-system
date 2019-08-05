@@ -39,26 +39,26 @@ function ripdb_local(){
 alias ripdb_local=ripdb_local;
 
 function ripdb(){
-    advise_vault_login;
+    vault_check_token || return 1;
     PGPASSWORD=$(vault_grep password secret/services/rip/db) pgcli -h $(consul_env $MADE_ENV kv get service/rip/db/host) -U rip;
 }
 alias ripdb=ripdb;
 
 function ripvizpdf(){
-    advise_vault_login;
+    vault_check_token || return 1;
     PGPASSWORD=$(vault_grep password secret/services/rip/db) eralchemy -i "postgresql+psycopg2://rip@$(consul_env $MADE_ENV kv get service/rip/db/host)" -o ~/Desktop/ripvizpdf_$(date +%F_%T).pdf;
 }
 alias ripvizpdf=ripvizpdf;
 
 function riptoken(){
-    advise_vault_login;
+    vault_check_token || return 1;
     # TODO @jg-make this work locally too
     (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 2099-12-31T23:59:59);
 }
 alias rip_token=rip_token;
 
 function rip_manual_migration(){
-    advise_vault_login;
+    vault_check_token || return 1;
     DB_HOST=$(consul_env $MADE_ENV kv get service/rip/db/host) DB_PASSWORD=$(vault_grep password secret/services/rip/db) DB_PORT=5432 ./manual_migration.sh;
 }
 alias rip_manual_migration=rip_manual_migration

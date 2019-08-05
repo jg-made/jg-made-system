@@ -17,16 +17,15 @@ function vault_grep() {
 }
 alias vault_grep=vault_grep
 
-function advise_vault_login() {
-    if [ $VAULT_ADDR != http://active.vault.service.$MADE_ENV.consul:8200 ]
+function vault_check_token() {
+    madeenv; # do this to ensure made env env var is set correctly in current shell.
+    if (vault status > /dev/null 2> /dev/null) && [ $VAULT_ADDR == http://active.vault.service.$MADE_ENV.consul:8200 ]
     then
-        # the vault url is not right. we might be logged in but to the wrong env.
-        echo "You are not logged in to Vault $MADE_ENV environment. Please run \`vault_login\`"
-    else
-        # we don't know if we are logged in to vault. Maybe use `vault status` to script that check?
-        echo "NB!!! make sure you ran \`vault_login\`"
+        return 0
     fi
+    echo "You are not logged in to Vault $MADE_ENV environment. Please run \`vault_login\`"
+    return 1
 }
-alias advise_vault_login=advise_vault_login
+alias vault_check_token=vault_check_token
 
 export_vault_addr

@@ -39,19 +39,19 @@ function papidb_local(){
 alias papidb_local=papidb_local
 
 function papidb(){
-    advise_vault_login;
+    vault_check_token || return 1;
     PGPASSWORD=$(vault_grep password secret/services/procurement/db) pgcli -h $(consul_env $MADE_ENV kv get service/procurement/db/host) -U procurement
 }
 alias papidb=papidb;
 
 function papivizpdf(){
-    advise_vault_login;
+    vault_check_token || return 1;
     PGPASSWORD=$(vault_grep password secret/services/procurement/db) eralchemy -i "postgresql+psycopg2://procurement@$(consul_env $MADE_ENV kv get service/procurement/db/host)" -o ~/Desktop/papivizpdf_$(date +%F_%T).pdf;
 }
 alias papivizpdf=papivizpdf;
 
 function papipg_dump(){
-    advise_vault_login;
+    vault_check_token || return 1;
     # https://dba.stackexchange.com/questions/55291/copy-postgresql-database-from-a-remote-server
     # you might have to do something like this:
     # createdb "papi_$MADE_ENV" -U procurement

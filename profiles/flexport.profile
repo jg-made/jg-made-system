@@ -1,5 +1,5 @@
 function flexport_env() {
-    advise_vault_login;
+    vault_check_token || return 1;
     DB_HOST=$(consul_env $MADE_ENV kv get service/procurement/db/host);
     DB_PASSWORD=$(vault_grep password secret/services/procurement/db);
     FLEXPORT_TOKEN=$(vault_grep token secret/services/procurement/flexport);
