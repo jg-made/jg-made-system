@@ -13,7 +13,7 @@ function good_morning(){
     emacs --daemon;
 
     # open screen
-    screen -d -m -S good_morning;
-    screen -S good_morning -X stuff 'jira_what_am_i_doing'$(echo -ne '\015')
+    screen -d -m -S x;
+    screen -S x -X stuff 'jira_what_am_i_doing'$(echo -ne '\015')
     screen -r;
 }
