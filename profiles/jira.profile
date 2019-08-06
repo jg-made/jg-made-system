@@ -59,6 +59,7 @@ function jira_start_working_on() {
             ;;
         * ) ;;
     esac
+    echo "Warning! If you run `jira in-progress` against an issue already in that state then it actually is marked as Blocked! Feature or bug\?"
     read -k 1 "confirminprogress?mark $JIRA_ISSUE as In Progress\? [Y/y to confirm, any other key to decline]"
     echo ""
     case $confirminprogress in
