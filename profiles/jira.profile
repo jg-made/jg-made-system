@@ -39,3 +39,32 @@ function jira_what_am_i_doing() {
     echo "BACKLOG"
     jira req "/rest/agile/1.0/board/$JIRA_BOARD/issue?jql=statusCategory=2%20AND%20assignee%20%3D%20$JIRA_NAME" -t table
 }
+
+function jira_what_can_i_pick_up_from_sprint() {
+    JIRA_BOARD=36
+    SPRINT=$1
+    echo "Seeing what you can pick up from sprint called '$SPRINT' on board #$JIRA_BOARD..."
+    # TODO @jg-made is this `jira req` thing deprecated? It sure is ugly
+    jira req "/rest/agile/1.0/board/$JIRA_BOARD/issue?jql=sprint=$SPRINT%20AND%20status%20%3D%20backlog" -t table
+}
+
+function jira_start_working_on() {
+    JIRA_ISSUE=$1
+    JIRA_NAME=$(jira session | grep -e '^name' | grep -o '[a-z]*[\.].*$')
+    read -k 1 "confirmassign?assign $JIRA_NAME to $JIRA_ISSUE\? [Y/y to confirm, any other key to decline]"
+    echo ""
+    case $confirmassign in
+        [Yy]* )
+            jira assign $JIRA_ISSUE $JIRA_NAME
+            ;;
+        * ) ;;
+    esac
+    read -k 1 "confirminprogress?mark $JIRA_ISSUE as In Progress\? [Y/y to confirm, any other key to decline]"
+    echo ""
+    case $confirminprogress in
+        [Yy]* )
+            jira in-progress $JIRA_ISSUE
+            ;;
+        * ) ;;
+    esac
+}
