@@ -53,7 +53,7 @@ alias ripvizpdf=ripvizpdf;
 function riptoken(){
     vault_check_token || return 1;
     # TODO @jg-make this work locally too
-    (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 2099-12-31T23:59:59);
+    (cd $RIP_PROJECT_DIR; HTTP_AUTH_SECRET_SALT=$(vault_grep secret_salt secret/services/rip/http_auth) python scripts/http_auth_token_generator.py $1 );
 }
 alias rip_token=rip_token;
 
