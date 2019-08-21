@@ -1,4 +1,7 @@
 function good_morning(){
+    # get git keychain first
+    papiworkon; gfa; cd ~;
+
     # apt things
     sudo apt update -y;
     sudo apt upgrade -y;
@@ -14,6 +17,8 @@ function good_morning(){
 
     # open screen
     screen -d -m -S x;
+
+    # give screen 2 seconds for shell profiles to load
     screen -S x -X stuff 'jira_what_am_i_doing'$(echo -ne '\015')
     screen -r;
 }

@@ -22,8 +22,12 @@ alias jira_papi_in_progress=jira_papi_in_progress
 
 function jview() {
     # e.g. jview bos-666
+
+    # OLD - they improved the format a lot
     # for this to work you need to install pandoc and lynx
-    jira view $1 | pandoc | lynx --stdin
+    # jira view $1 | pandoc | lynx --stdin
+
+    jira view $1
 }
 
 function jjview() {
