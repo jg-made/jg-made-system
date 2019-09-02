@@ -85,3 +85,19 @@ curl -s 'http://rip.made-test.com/orders/token' \
         | grep -e '^{$' -A 4
 }
 alias rip_get_returnable_lines_test=rip_get_returnable_lines_test
+
+function rip_api_abuse(){
+    export RIPAUTHSALT=changeit;
+    PGPASSWORD=$(vault_grep password secret/services/rip/db) \
+              psql -h $(consul_env test kv get service/rip/db/host) -U rip -t \
+              -c "select op.order_id from order_placed as op order by order_date desc ;" | \
+        xargs -n 1 -P 9999 \
+              sh -c 'HTTP_AUTH_SECRET_SALT=$RIPAUTHSALT \
+python ./scripts/http_auth_token_generator.py $0 \
+--quiet=True \
+--autocopy=False \
+| xargs -I token \
+curl --user admin:changeit -s 'http://rip.made-test.com/orders/token' \
+'
+}
+alias rip_api_abuse=rip_api_abuse
