@@ -18,6 +18,6 @@ function good_morning(){
     # give screen a big 5 seconds for shell profiles to load
     sleep 5;
 
-    screen -S x -X stuff 'emw .; jira_what_am_i_doing;'$(echo -ne '\015')
+    screen -S x -X stuff 'jira_what_am_i_doing;'$(echo -ne '\015')
     screen -r;
 }
