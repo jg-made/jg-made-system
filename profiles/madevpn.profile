@@ -3,7 +3,7 @@ source $JG_MADE_SYSTEM/auths/unset/madevpn.profile;
 export MADEVPN_SCREEN_NAME=madevpn;
 
 function maybe_i_should_stop_using_ubuntu() {
-    resolvectl domain tun0 consul
+    sudo resolvectl domain tun0 consul
 }
 alias maybe_i_should_stop_using_ubuntu=maybe_i_should_stop_using_ubuntu
 
