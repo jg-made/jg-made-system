@@ -1,6 +1,6 @@
 MADE_ENV_PATH=$HOME/.made_env
 
-function madeenv() {
+function madeenv_core() {
     # this function actually _sets_ $MADE_ENV using the $MADE_ENV_PATH file
     if [ -n "$1" ]
     then
@@ -20,6 +20,6 @@ function madeenv() {
         fi
     fi
 }
-alias madeenv=madeenv;
+alias madeenv_core=madeenv_core;
 
-madeenv;
+madeenv_core;

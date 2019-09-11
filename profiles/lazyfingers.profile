@@ -21,3 +21,11 @@ function good_morning(){
     screen -S x -X stuff 'jira_what_am_i_doing;'$(echo -ne '\015')
     screen -r;
 }
+
+function madeenv() {
+    madeenv_core $1;
+    export_consul_addr;
+    export_vault_addr;
+    export_nomad_addr
+}
+alias madeenv=madeenv;

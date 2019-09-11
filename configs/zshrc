@@ -99,7 +99,6 @@ source $JG_MADE_SYSTEM/profiles/alarm.profile
 source $JG_MADE_SYSTEM/profiles/asdf.profile
 source $JG_MADE_SYSTEM/profiles/beep.profile
 source $JG_MADE_SYSTEM/profiles/bluejeans.profile
-source $JG_MADE_SYSTEM/profiles/consul.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dns.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
@@ -125,7 +124,8 @@ source $JG_MADE_SYSTEM/profiles/yarn.profile
 source $JG_MADE_SYSTEM/profiles/madeenv.profile;
 source $JG_MADE_SYSTEM/profiles/madevpn.profile;
 
-# vault/nomad relies on madeenv.profile
+# infra - vault/nomad/consul relies on madeenv.profile
+source $JG_MADE_SYSTEM/profiles/consul.profile
 source $JG_MADE_SYSTEM/profiles/nomad.profile
 source $JG_MADE_SYSTEM/profiles/vault.profile
 

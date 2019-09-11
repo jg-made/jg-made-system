@@ -1,8 +1,8 @@
 # install consul using go + make dev
 
-function consul_env() {
-    consul_env_name=$1
-    shift 1
-    CONSUL_HTTP_ADDR=http://consul.service.$consul_env_name.consul:8500 consul $@
+function export_consul_addr() {
+    export CONSUL_HTTP_ADDR=http://consul.service.$MADE_ENV.consul:8500
 }
-alias consul_env=consul_env
+alias export_consul_addr=export_consul_addr
+
+export_consul_addr
