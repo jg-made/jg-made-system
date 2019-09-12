@@ -31,10 +31,10 @@ PROMPT="$SEMAPHORE_LHS$SEMAPHORE_NEWLINE_PROMPT"
 
 #Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
-  local cb=$(git_current_branch)
-  if [ -n "$cb" ]; then
-    echo "%{$fg_bold[red]%}$(work_in_progress)%{$reset_color%}"
-  fi
+    local cb=$(git_current_branch)
+    if [ -n "$cb" ]; then
+        echo "%{$fg_bold[red]%}$(work_in_progress)%{$reset_color%}"
+    fi
 }
 
 made_env_status() {
