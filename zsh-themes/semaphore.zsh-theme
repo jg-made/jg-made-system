@@ -10,7 +10,7 @@ SEMAPHORE_DIR_COLOR="%{$fg[cyan]%}"
 SEMAPHORE_GIT_BRANCH_COLOR="%{$fg[green]%}"
 SEMAPHORE_GIT_CLEAN_COLOR="%{$fg[green]%}"
 SEMAPHORE_GIT_DIRTY_COLOR="%{$fg[red]%}"
-SEMAPHORE_TIME_COLOR="%{$fg[yellow]%}"
+SEMAPHORE_TIME_COLOR="%{$fg[magenta]%}"
 SEMAPHORE_PRP_COLOR="%{$fg[magenta]%}"
 
 # These Git variables are used by the oh-my-zsh git_prompt_info helper:
@@ -55,9 +55,9 @@ made_env_status() {
 }
 
 # 24-hour clock time with seconds
-SEMAPHORE_TIME="$SEMAPHORE_TIME_COLOR%D{%K:%M:%S}$SEMAPHORE_DEFAULT_COLOR"
+SEMAPHORE_TIME="%{$fg[magenta]%}%D{%K:%M:%S}$SEMAPHORE_DEFAULT_COLOR"
 
 # Put node version (nvm) and time on right hand side prompt
 #RPS1='$SEMAPHORE_NVM_COLOR [node-$(nvm_prompt_info)]$SEMAPHORE_DEFAULT_COLOR $(git_custom_status) $SEMAPHORE_TIME'
 #RPS1='$(git_custom_status) $SEMAPHORE_TIME'
-RPS1='$(made_env_status) $SEMAPHORE_DEFAULT_COLOR $(git_custom_status) $SEMAPHORE_TIME'
+RPS1='$(git_custom_status) $SEMAPHORE_TIME $(made_env_status)'
