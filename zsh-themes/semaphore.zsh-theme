@@ -38,15 +38,20 @@ git_custom_status() {
 }
 
 made_env_status() {
-    if [ "$MADE_ENV" = "prod" ]; then
-        echo "%{$fg_bold[red]%}[env: $MADE_ENV:u]%{$reset_color%}"
-    else
-        if [ "$MADE_ENV" = "uat" ]; then
-            echo "%{$fg_bold[yellow]%}[env: $MADE_ENV:u]%{$reset_color%}"
-        else
+    case $MADE_ENV in
+        "test")
             echo "%{$fg_bold[magenta]%}[env: $MADE_ENV:u]%{$reset_color%}"
-        fi
-    fi
+            ;;
+        "uat")
+            echo "%{$fg_bold[yellow]%}[env: $MADE_ENV:u]%{$reset_color%}"
+            ;;
+        "prod")
+            echo "%{$fg_bold[red]%}[env: $MADE_ENV:u]%{$reset_color%}"
+            ;;
+        *)
+            echo "%{$fg_bold[cyan]%}[env: $MADE_ENV:u]%{$reset_color%}"
+            ;;
+    esac
 }
 
 # 24-hour clock time with seconds
