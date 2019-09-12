@@ -41,7 +41,11 @@ made_env_status() {
     if [ "$MADE_ENV" = "prod" ]; then
         echo "%{$fg_bold[red]%}[env: $MADE_ENV:u]%{$reset_color%}"
     else
-        echo "%{$fg_bold[magenta]%}[env: $MADE_ENV:u]%{$reset_color%}"
+        if [ "$MADE_ENV" = "uat" ]; then
+            echo "%{$fg_bold[yellow]%}[env: $MADE_ENV:u]%{$reset_color%}"
+        else
+            echo "%{$fg_bold[magenta]%}[env: $MADE_ENV:u]%{$reset_color%}"
+        fi
     fi
 }
 
