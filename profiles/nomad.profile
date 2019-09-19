@@ -6,13 +6,31 @@ function export_nomad_addr() {
 
 export_nomad_addr
 
+function hyu_nomad1() {
+    mock-job-status-response | \
+        sed -n -e '/Allocations/,/^$/p' | \
+        grep -o -e '^.*running.*$' | \
+        awk '{print $2}' | \
+        xargs -n 1 nomad node status
+}
+
+function hyu_nomad2() {
+    mock-node-status | \
+        grep -o -E 'Name\s+=\s+.*$' | \
+        grep -o -E '[0-9]+[-0-9]*[0-9]+$' | \
+        sed 's/-/./g'
+}
+
 function get-ip-addresses-of-job() {
     nomad job status $1 | \
         sed -n -e '/Allocations/,/^$/p' | \
         grep -o -e '^.*running.*$' | \
         awk '{print $2}' | \
-        xargs -n 1 nomad node status | \
-        grep -o -E 'Name\s+=\s+.*$' | \
-        grep -o -E '[0-9]+[-0-9]*[0-9]+$' | \
-        sed 's/-/./g'
+        xargs -I nodeid zsh -c '{
+sleep 5;
+nomad node status nodeid | \
+grep -o -E 'Name\s+=\s+.*$' | \
+grep -o -E '[0-9]+[-0-9]*[0-9]+$' | \
+sed 's/-/./g';
+}'
 }
