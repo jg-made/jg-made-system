@@ -18,6 +18,7 @@ function good_morning(){
 }
 
 function madeenv() {
+    # this is not ideal cos the consul, vault and nomad env vars are still not set in other shells/windows
     madeenv_core $1;
     export_consul_addr;
     export_vault_addr;
