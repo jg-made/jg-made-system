@@ -14,14 +14,7 @@ function good_morning(){
     cd ~/.emacs.d; gco develop; gfa; gl; gco jg-made; grb develop; cd ~;
 
     # open screen
-    screen -d -m -S x;
-
-    # give screen a big 5 seconds for shell profiles to load
-    sleep 5;
-
     screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
-    # screen -S x -X stuff 'jira_what_am_i_doing;'$(echo -ne '\015')
-    # screen -r;
 }
 
 function madeenv() {
