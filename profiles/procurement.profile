@@ -7,6 +7,11 @@ function papiworkon() {
 }
 alias papiworkon=papiworkon
 
+function papiscreen() {
+    screen -c $JG_MADE_SYSTEM/screenrcs/papi.screenrc
+}
+alias papiscreen=papiscreen
+
 # KILL PROCUREMENT CONTAINERS
 function papikill() {
     read -k 1 "confirmkill?kill all procurement containers\? [Y/y to confirm, any other key to decline]"

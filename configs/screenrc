@@ -17,3 +17,26 @@ hardstatus             alwayslastline
 hardstatus string '%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
 
 escape ^@@
+
+defscrollback 1000
+
+altscreen on
+
+# https://askubuntu.com/questions/980910/how-do-i-start-screen-with-multiple-splits-directly-from-the-command-line
+# # create the top screen
+# chdir $PROCUREMENT_PROJECT_DIR
+# screen -t "papi" jira_what_am_i_doing
+# # split the screen and focus onto the new created space
+# split
+# focus
+# #create the zsh
+# chdir $RIP_PROJECT_DIR
+# screen
+# # split vertically and focus onto the new area
+# split -v
+# focus
+# # create the last screen
+# screen -t "Htop" htop
+# # focus twice to end up with the bash area active
+# focus
+# focus

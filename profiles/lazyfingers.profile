@@ -1,6 +1,7 @@
 function good_morning(){
     # get git keychain first
     papiworkon; gfa; cd ~;
+    ripworkon; gfa; cd ~;
 
     # apt things
     sudo apt update -y;
@@ -18,8 +19,9 @@ function good_morning(){
     # give screen a big 5 seconds for shell profiles to load
     sleep 5;
 
-    screen -S x -X stuff 'jira_what_am_i_doing;'$(echo -ne '\015')
-    screen -r;
+    screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
+    # screen -S x -X stuff 'jira_what_am_i_doing;'$(echo -ne '\015')
+    # screen -r;
 }
 
 function madeenv() {

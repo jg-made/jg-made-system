@@ -1,0 +1,18 @@
+shell "/usr/bin/zsh"
+hardstatus alwayslastline
+hardstatus string '%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+escape ^@@
+defscrollback 1000
+altscreen on
+
+chdir $PROCUREMENT_PROJECT_DIR
+screen -t "webapp" make webapp-dev
+split
+focus
+chdir $PROCUREMENT_PROJECT_DIR
+screen -t "logs" sh -c 'sleep 12 && docker-compose logs --tail 10000 -f webapp eventconsumer'
+focus
+split -v
+focus
+chdir $PROCUREMENT_PROJECT_DIR
+screen
