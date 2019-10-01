@@ -2,7 +2,7 @@ shell "/usr/bin/zsh"
 hardstatus alwayslastline
 hardstatus string '%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
 escape ^@@
-defscrollback 1000
+defscrollback 100000
 altscreen on
 
 chdir $PROCUREMENT_PROJECT_DIR

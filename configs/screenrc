@@ -18,7 +18,7 @@ hardstatus string '%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?
 
 escape ^@@
 
-defscrollback 1000
+defscrollback 100000
 
 altscreen on
 
