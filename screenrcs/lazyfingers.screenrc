@@ -5,6 +5,10 @@ escape ^@@
 defscrollback 100000
 altscreen on
 
+rendition so =06
+rendition so km
+caption string "%{03} "
+
 chdir $PROCUREMENT_PROJECT_DIR
 screen
 split

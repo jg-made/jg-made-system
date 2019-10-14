@@ -40,3 +40,7 @@ altscreen on
 # # focus twice to end up with the bash area active
 # focus
 # focus
+
+rendition so =06
+rendition so km
+caption string "%{03} "
