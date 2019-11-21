@@ -29,7 +29,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(clojure
+     go
      nginx
      csv
      sql
@@ -51,6 +52,7 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-position 'right)
      (org :variables org-projectile-file "TODOs.org")
+     (treemacs :variables treemacs-lock-width t)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -180,6 +182,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-themes '(
                          doom-one
                          spacemacs-dark
+                         spacemacs-light
                          doom-nord-light
                          cyberpunk
                          )
@@ -187,6 +190,11 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
+   ;; dotspacemacs-default-font '("Input Mono"
+   ;;                             :size 16
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.1)
    dotspacemacs-default-font '("Noto Mono"
                                :size 16
                                :weight normal
@@ -354,6 +362,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;; (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -366,7 +375,6 @@ you should place your code here."
   "GENERAL STUFF"
   (global-flycheck-mode 1)
   (golden-ratio-mode 1)
-  (linum-relative-mode 1)
   (blink-cursor-mode 1)
   (solaire-mode 1)
   (setq-default scroll-margin 10)
@@ -376,6 +384,9 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("Jenkinsfile$" . groovy-mode))
   ;; "Open HCL files in hcl-mode by default"
   (add-to-list 'auto-mode-alist '("\\.hcl\\'" . hcl-mode))
+  ;; "Open html.leex and html.eex files in web-mode by default"
+  (add-to-list 'auto-mode-alist '("\\.html.leex\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html.eex\\'" . web-mode))
   ;; "https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7""
   (evil-leader/set-key "q q" 'spacemacs/frame-killer)
 
@@ -399,11 +410,14 @@ you should place your code here."
   (add-hook 'python-mode-hook (lambda()
                                 (flycheck-mode 1)
                                 (semantic-mode 1)
-                                (setq flycheck-checker 'python-pylint)))
+                                (setq flycheck-checker 'python-pylint
+                                      flycheck-checker-error-threshold 900
+                                      ;; flycheck-pylintrc "~/.pylintrc"
+                                      )))
   ;; (add-hook 'python-mode-hook (lambda() (origami-mode 1)))
   ;; (add-hook 'python-mode-hook 'py-yapf-enable-on-save)
   ;; (eval-after-load "company"
-  ;;   '(add-to-list 'company-backends 'company-anaconda))
+    ;; '(add-to-list 'company-backends 'company-anaconda))
   ;; "Open html files in jinja2 mode by default"
   ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . jinja2-mode))
 
@@ -432,14 +446,14 @@ you should place your code here."
     ;; Corrects (and improves) org-mode's native fontification.
     (doom-themes-org-config)
 
-    ;; Enable custom treemacs theme (all-the-icons must be installed!)
+    ;; Enable custom treemacs theme (all-the-icons must be installed! - use M-x all-the-icons-install-fonts)
     (doom-themes-treemacs-config))
   (setq doom-enable-bold t    ; if nil, bolding are universally disabled
         doom-enable-italic t  ; if nil, italics are universally disabled
 
         ;; doom-one specific settings
         doom-one-brighter-modeline t
-        doom-one-brighter-comments t)
+        doom-one-brighter-comments nil)
 
   ;; SOLAIRE MODE STUFF
   (require 'solaire-mode)
@@ -457,6 +471,7 @@ you should place your code here."
   ;; This should be used *after* you load the active theme!
   ;; NOTE: This is necessary for themes in the doom-themes package!
   (solaire-mode-swap-bg)
+  (solaire-global-mode)
 
  (setq js-indent-level 2)
 
@@ -502,4 +517,9 @@ you should place your code here."
   ;; ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
   ;; ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
 
+
+  ;; ;; "ORG MODE STUFF"
+  (add-hook 'org-mode-hook (lambda()
+                             ;; flycheck for org uses proselint which is heavy on the cpu
+                             (flycheck-mode 0)))
 )
