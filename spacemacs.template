@@ -35,6 +35,8 @@ This function should only modify configuration layer settings."
      csv
      sql
      javascript
+     lsp
+     dap
      html
      php
      ansible
@@ -390,7 +392,70 @@ you should place your code here."
   ;; "https://medium.com/@bobbypriambodo/blazingly-fast-spacemacs-with-persistent-server-92260f2118b7""
   (evil-leader/set-key "q q" 'spacemacs/frame-killer)
 
-  "DOCKER/TRAMP STUFF"
+  (add-to-list 'spacemacs-indent-sensitive-modes 'elixir-mode)
+
+  ;; LSP STUFF FOR ELIXIR PHOENIX
+  (use-package lsp-mode
+    :commands lsp
+    :ensure t
+    :diminish lsp-mode
+    :hook
+    (elixir-mode . lsp)
+    :init
+    (setq lsp-file-watch-ignored
+     '(".idea" ".ensime_cache" ".eunit" "node_modules"
+       ".git" ".hg" ".fslckout" "_FOSSIL_"
+       ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+       "build" "_build" "deps")
+     )
+    (add-to-list 'exec-path "~/gitBits/elixir-ls/release/"))
+
+  (use-package lsp-ui
+    :commands lsp-ui-mode
+    :custom-face
+    (lsp-ui-doc-background ((t (:background nil))))
+    (lsp-ui-doc-header ((t (:inherit (font-lock-string-face italic)))))
+    :bind (:map lsp-ui-mode-map
+                ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+                ([remap xref-find-references] . lsp-ui-peek-find-references)
+                ("C-c u" . lsp-ui-imenu))
+    :init
+    (setq lsp-ui-doc-enable nil
+          lsp-ui-doc-header t
+          lsp-ui-doc-include-signature t
+          lsp-ui-doc-position 'bottom
+          lsp-ui-doc-use-webkit t
+          ;; lsp-ui-doc-border (face-foreground 'default)
+
+          lsp-ui-sideline-enable nil
+          lsp-ui-sideline-ignore-duplicate t)
+    :config
+    ;; WORKAROUND Hide mode-line of the lsp-ui-imenu buffer
+    ;; https://github.com/emacs-lsp/lsp-ui/issues/243
+    (defadvice lsp-ui-imenu (after hide-lsp-ui-imenu-mode-line activate)
+      (setq mode-line-format nil)))
+
+  (use-package company-lsp
+    :init (setq company-lsp-cache-candidates 'auto))
+
+  (require 'dap-elixir)
+  (dap-ui-mode)
+  (dap-mode)
+  (with-eval-after-load 'elixir-mode
+    (spacemacs/declare-prefix-for-mode 'elixir-mode
+      "mt" "tests" "testing related functionality")
+    (spacemacs/set-leader-keys-for-major-mode 'elixir-mode
+      "j=" 'lsp-format-buffer
+      "tb" 'exunit-verify-all
+      "ta" 'exunit-verify
+      "tk" 'exunit-rerun
+      "tt" 'exunit-verify-single))
+
+  "kbd macro for IEx.pry"
+  (fset 'iex_pry
+        (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([111 114 101 113 117 105 114 101 32 73 69 120 return 73 69 120 46 112 114 121 escape] 0 "%d")) arg)))
+
+  ;; "DOCKER/TRAMP STUFF"
   ;; "Open Dockerfile files in dockerfile mode by default"
   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
   ;; "Get SPC-f-f `/docker:' docker tramp to autocomplete names"
@@ -398,7 +463,7 @@ you should place your code here."
   ;; fix tramp hanging on alpine containers as per https://github.com/emacs-pe/docker-tramp.el
   (require 'docker-tramp-compat)
 
-  "PYTHON STUFF"
+  ;; "PYTHON STUFF"
   (defun projectile-pyenv-mode-set ()
     ;; "Set pyenv version matching project name."
     (let ((project (projectile-project-name)))
@@ -473,6 +538,7 @@ you should place your code here."
   (solaire-mode-swap-bg)
   (solaire-global-mode)
 
+  ;; DEFAULT INDENTATION - 2 spaces
  (setq js-indent-level 2)
 
   ;; ;; "REACT JS STUFF"
