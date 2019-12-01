@@ -14,7 +14,9 @@ function good_morning(){
     cd ~/.emacs.d; gco develop; gfa; gl; gco jg-made; grb develop; cd ~;
 
     # open screen
-    screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
+    # screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
+
+    screen -dRR
 }
 
 function madeenv() {
