@@ -81,6 +81,7 @@ This function should only modify configuration layer settings."
      angular-mode
      solaire-mode
      doom-themes
+     exunit
      (flycheck-jest :location elpa)
      (groovy-mode :location elpa)
      (hcl-mode :location elpa)
