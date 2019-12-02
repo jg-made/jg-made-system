@@ -438,7 +438,8 @@ you should place your code here."
 
   (use-package company-lsp
     :init (setq company-lsp-cache-candidates 'auto))
-  (add-hook 'projectile-after-switch-project-hook 'lsp-restart-workspace)
+  ;; this doesn't work:
+  ;; (add-hook 'projectile-after-switch-project-hook #'lsp-restart-workspace)
 
   (require 'dap-elixir)
   (dap-ui-mode)
