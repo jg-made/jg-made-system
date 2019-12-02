@@ -102,7 +102,7 @@ This function should only modify configuration layer settings."
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only
    )
- )
+  )
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -395,7 +395,7 @@ you should place your code here."
 
   (add-to-list 'spacemacs-indent-sensitive-modes 'elixir-mode)
 
-  ;; LSP STUFF FOR ELIXIR PHOENIX
+  ;; LSP STUFF
   (use-package lsp-mode
     :commands lsp
     :ensure t
@@ -404,11 +404,11 @@ you should place your code here."
     (elixir-mode . lsp)
     :init
     (setq lsp-file-watch-ignored
-     '(".idea" ".ensime_cache" ".eunit" "node_modules"
-       ".git" ".hg" ".fslckout" "_FOSSIL_"
-       ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
-       "build" "_build" "deps")
-     )
+          '(".idea" ".ensime_cache" ".eunit" "node_modules"
+            ".git" ".hg" ".fslckout" "_FOSSIL_"
+            ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+            "build" "_build" "deps")
+          )
     (add-to-list 'exec-path "~/gitBits/elixir-ls/release/"))
 
   (use-package lsp-ui
@@ -438,6 +438,7 @@ you should place your code here."
 
   (use-package company-lsp
     :init (setq company-lsp-cache-candidates 'auto))
+  (add-hook 'projectile-after-switch-project-hook 'lsp-restart-workspace)
 
   (require 'dap-elixir)
   (dap-ui-mode)
@@ -465,25 +466,11 @@ you should place your code here."
   (require 'docker-tramp-compat)
 
   ;; "PYTHON STUFF"
-  (defun projectile-pyenv-mode-set ()
-    ;; "Set pyenv version matching project name."
-    (let ((project (projectile-project-name)))
-      (if (member project (pyenv-mode-versions))
-          (pyenv-mode-set project)
-        (pyenv-mode-unset))))
-  (add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
-  (spacemacs/set-leader-keys-for-major-mode 'python-mode "g g" 'anaconda-mode-find-definitions)
-  (add-hook 'python-mode-hook (lambda()
-                                (flycheck-mode 1)
-                                (semantic-mode 1)
-                                (setq flycheck-checker 'python-pylint
-                                      flycheck-checker-error-threshold 900
-                                      ;; flycheck-pylintrc "~/.pylintrc"
-                                      )))
-  ;; (add-hook 'python-mode-hook (lambda() (origami-mode 1)))
-  ;; (add-hook 'python-mode-hook 'py-yapf-enable-on-save)
-  ;; (eval-after-load "company"
-    ;; '(add-to-list 'company-backends 'company-anaconda))
+  ;; you just need to install these things into your env:
+  ;; pip install --upgrade pyls-mypy pyls-isort python-language-server jedi
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode "g g" 'lsp-find-definition)
+
+  ;; ANSIBLE STUFF
   ;; "Open html files in jinja2 mode by default"
   ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . jinja2-mode))
 
@@ -540,7 +527,7 @@ you should place your code here."
   (solaire-global-mode)
 
   ;; DEFAULT INDENTATION - 2 spaces
- (setq js-indent-level 2)
+  (setq js-indent-level 2)
 
   ;; ;; "REACT JS STUFF"
   ;; (defun setup-tide-mode ()
@@ -589,4 +576,4 @@ you should place your code here."
   (add-hook 'org-mode-hook (lambda()
                              ;; flycheck for org uses proselint which is heavy on the cpu
                              (flycheck-mode 0)))
-)
+  )
