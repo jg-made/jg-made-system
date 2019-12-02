@@ -1,7 +1,17 @@
+function update_spacemacs_fork_to_latest_develop(){
+    cd ~/.emacs.d;
+    git checkout develop;
+    git fetch --all;
+    git rebase upstream/develop;
+    git checkout jg-made;
+    git rebase develop;
+    cd ~;
+}
+
 function good_morning(){
     # get git keychain first
-    papiworkon; gfa; cd ~;
-    ripworkon; gfa; cd ~;
+    papiworkon; git fetch --all; cd ~;
+    ripworkon; git fetch --all; cd ~;
 
     # apt things
     sudo apt update -y;
@@ -10,17 +20,17 @@ function good_morning(){
     # update asdf things
     asdf plugin-update --all;
 
-    # update spacemacs
-    cd ~/.emacs.d; gco develop; gfa; gl; gco jg-made; grb develop; cd ~;
+    update_spacemacs_fork_to_latest_develop;
 
     # open screen
     # screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
 
-    screen -dRR
+    screen -dRR;
 }
 
 function madeenv() {
     # this is not ideal cos the consul, vault and nomad env vars are still not set in other shells/windows
+    echo "THIS FUNCTION IS DANGEROUS - env vars are only being changed in THIS shell"
     madeenv_core $1;
     export_consul_addr;
     export_vault_addr;
