@@ -9,7 +9,10 @@ function update_spacemacs_fork_to_latest_develop(){
 }
 
 function good_morning(){
-    # get git keychain first
+    # get sudo rights first
+    sudo echo " "
+
+    # get git keychain second
     papiworkon; git fetch --all; cd ~;
     ripworkon; git fetch --all; cd ~;
 
@@ -18,6 +21,7 @@ function good_morning(){
     sudo apt upgrade -y;
 
     # update asdf things
+    asdf update;
     asdf plugin-update --all;
 
     update_spacemacs_fork_to_latest_develop;
