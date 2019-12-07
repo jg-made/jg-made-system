@@ -17,6 +17,7 @@ __pycache__/
 .python-version
 .pylintrc
 *.pyc
+.mypy_cache/
 geckodriver.log
 
 .env
