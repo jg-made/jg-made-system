@@ -26,8 +26,7 @@ function get-ip-addresses-of-job() {
         sed -n -e '/Allocations/,/^$/p' | \
         grep -o -e '^.*running.*$' | \
         awk '{print $2}' | \
-        xargs -I nodeid zsh -c '{
-sleep 5;
+        xargs -P 1 -I nodeid sh -c '{
 nomad node status nodeid | \
 grep -o -E 'Name\s+=\s+.*$' | \
 grep -o -E '[0-9]+[-0-9]*[0-9]+$' | \
