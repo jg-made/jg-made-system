@@ -97,7 +97,6 @@ source $JG_MADE_SYSTEM/profiles/hub.profile
 
 source $JG_MADE_SYSTEM/profiles/alarm.profile
 source $JG_MADE_SYSTEM/profiles/asdf.profile
-source $JG_MADE_SYSTEM/profiles/beep.profile
 source $JG_MADE_SYSTEM/profiles/bluejeans.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dns.profile
@@ -114,6 +113,7 @@ source $JG_MADE_SYSTEM/profiles/postman.profile
 source $JG_MADE_SYSTEM/profiles/pyenv.profile
 source $JG_MADE_SYSTEM/profiles/python.profile
 source $JG_MADE_SYSTEM/profiles/rbenv.profile
+source $JG_MADE_SYSTEM/profiles/sound.profile
 source $JG_MADE_SYSTEM/profiles/todo.profile
 source $JG_MADE_SYSTEM/profiles/yarn.profile
 
