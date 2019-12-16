@@ -26,3 +26,4 @@ geckodriver.log
 TODOs.org
 
 .vscode/
+.elixir_ls/
