@@ -139,6 +139,7 @@ source $JG_MADE_SYSTEM/profiles/procurement.profile
 source $JG_MADE_SYSTEM/profiles/erp.profile
 source $JG_MADE_SYSTEM/profiles/rip.profile
 source $JG_MADE_SYSTEM/profiles/flexport.profile
+source $JG_MADE_SYSTEM/profiles/acquisition.profile
 
 # PUT LAZYFINGERS LAST
 # Use lazyfingers for the stupid lazy i-hate-both-typing-and-thinking functions
