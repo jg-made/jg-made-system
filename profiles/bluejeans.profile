@@ -15,7 +15,7 @@ function bluejeans_OLD() {
     screen -S $BLUEJEANS_SCREEN_NAME -d -m /opt/bluejeans/bluejeans-bin >> $BLUEJEANS_LOG_DIR/output.log 2>>$BLUEJEANS_LOG_DIR/error.log
   fi
 }
-alias bluejeans=bluejeans
+alias bluejeans_OLD=bluejeans_OLD
 
 function bluejeans_kill() {
   if (screen -ls | grep -q $BLUEJEANS_SCREEN_NAME)
