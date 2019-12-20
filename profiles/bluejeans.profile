@@ -2,6 +2,8 @@ export BLUEJEANS_LOG_DIR=$JG_MADE_SYSTEM/logs/bluejeans;
 export BLUEJEANS_SCREEN_NAME=bluejeans;
 
 function bluejeans() {
+    echo "Don't forget to run the headset script!";
+    sleep 2;
     /opt/bluejeans/bluejeans-bin
 }
 alias bluejeans=bluejeans
