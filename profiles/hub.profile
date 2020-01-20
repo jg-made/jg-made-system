@@ -3,6 +3,7 @@ fpath=(~/.zsh/completions $fpath)
 autoload -U compinit && compinit
 
 alias hubpr='hub pr list \
+-^ \
 -f "\
 ============
 %sC [%S] %sC [%i] %Creset %t
