@@ -9,7 +9,7 @@ function headset_volume_fix() {
     # https://askubuntu.com/questions/279407/how-to-disable-microphone-from-auto-adjusting-its-input-volume/736655#736655
     while true;
     do
-        amixer -c 0 set 'Headset Mic Boost' 10db > /dev/null;
+        amixer -c 0 set 'Headset Mic Boost' 11db > /dev/null;
         amixer -c 0 set 'Capture' 35db > /dev/null;
         sleep 0.1
     done;
