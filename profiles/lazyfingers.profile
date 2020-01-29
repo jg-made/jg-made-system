@@ -33,8 +33,8 @@ function good_morning(){
 }
 
 function madeenv() {
-    # this is not ideal cos the consul, vault and nomad env vars are still not set in other shells/windows
-    echo "THIS FUNCTION IS DANGEROUS - env vars are only being changed in THIS shell"
+    # this is not ideal cos the consul, vault and nomad env vars are still not set in pre-existing shells/windows
+    echo "THIS FUNCTION IS DANGEROUS - env vars are only being changed in THIS shell and FUTURE shells"
     madeenv_core $1;
     export_consul_addr;
     export_vault_addr;
