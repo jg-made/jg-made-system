@@ -13,3 +13,12 @@ function eventstore_post_order_event() {
     EVENTSTORE_URL="eventstore.service.test.consul:2113"
     curl -d @$JSON_FILE "http://$EVENTSTORE_URL/streams/$STREAM" -H "Content-Type:application/json" -H "ES-EventType: $EVENT_TYPE" -H "ES-EventId: $UUID"
 }
+
+function eventstore_local() {
+    docker run --name eventstore -it \
+           -p 2113:2113 \
+           -p 1113:1113 \
+           -e EVENTSTORE_START_STANDARD_PROJECTIONS=True \
+           -e EVENTSTORE_RUN_PROJECTIONS=all \
+           eventstore/eventstore
+}
