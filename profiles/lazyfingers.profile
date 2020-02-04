@@ -29,6 +29,8 @@ function good_morning(){
     # open screen
     # screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
 
+    madevpn_restart;
+
     screen -dRR;
 }
 
