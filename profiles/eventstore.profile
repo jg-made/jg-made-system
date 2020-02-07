@@ -10,7 +10,7 @@ function eventstore_post_order_event() {
     EVENT_TYPE=$(echo $JSON_FILE | sed -e 's/\.json\s*//g')
     ORDER_ID=$(cat $JSON_FILE | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["order_id"]')
     STREAM="order-$ORDER_ID"
-    EVENTSTORE_URL="eventstore.service.test.consul:2113"
+    EVENTSTORE_URL="eventstore.service.$MADE_ENV.consul:2113"
     curl -d @$JSON_FILE "http://$EVENTSTORE_URL/streams/$STREAM" -H "Content-Type:application/json" -H "ES-EventType: $EVENT_TYPE" -H "ES-EventId: $UUID"
 }
 
