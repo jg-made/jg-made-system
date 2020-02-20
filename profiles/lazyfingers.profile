@@ -29,7 +29,7 @@ function good_morning(){
     # open screen
     # screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
 
-    madevpn_restart;
+    vpn_like_a_boss;
 
     screen -dRR;
 }

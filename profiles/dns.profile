@@ -23,6 +23,9 @@ function force_domain_through_vpn() {
             grep -o -e '[0-9]*[.][0-9]*[.][0-9]*[.][0-9]*' | \
             grep -o -e '^[0-9]*[.][0-9]*' | \
             xargs -I prefixy echo prefixy.0.0 | \
-            xargs -I ip_trans sudo route add -net ip_trans gw $destination netmask 255.255.0.0 dev tun0
+            xargs -I ip_trans bash -c "\
+sudo route del -net ip_trans gw $destination netmask 255.255.255.0 dev tun0 2>/dev/null;
+sudo route add -net ip_trans gw $destination netmask 255.255.0.0 dev tun0;
+"
     fi
 }
