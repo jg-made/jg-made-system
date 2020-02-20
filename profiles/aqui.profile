@@ -1,8 +1,8 @@
 # Export some useful vars
-export ACQUISITION_PROJECT_DIR=$HOME/madedotcom/acquisition;
+export AQUI_PROJECT_DIR=$HOME/madedotcom/aqui;
 
 # LAZY FINGERS
 function aquiworkon() {
-    cd $ACQUISITION_PROJECT_DIR
+    cd $AQUI_PROJECT_DIR
 }
 alias aquiworkon=aquiworkon
