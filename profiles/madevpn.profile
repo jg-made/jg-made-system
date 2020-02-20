@@ -95,6 +95,6 @@ alias madevpn_restart=madevpn_restart;
 
 function vpn_like_a_boss() {
     madevpn_restart;
-    ~/.force_domains_through_vpn.sh;
+    zsh ~/.force_domains_through_vpn.sh;
 }
 alias vpn_like_a_boss=vpn_like_a_boss;
