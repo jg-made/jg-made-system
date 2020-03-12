@@ -8,7 +8,7 @@ function update_spacemacs_fork_to_latest_develop(){
     cd ~;
 }
 
-function good_morning(){
+function update_everything(){
     # get sudo rights first
     sudo echo " "
 
@@ -25,13 +25,18 @@ function good_morning(){
     asdf plugin-update --all;
 
     update_spacemacs_fork_to_latest_develop;
+}
 
-    # open screen
-    # screen -c $JG_MADE_SYSTEM/screenrcs/lazyfingers.screenrc
-
+function good_morning(){
+    update_everything
     vpn_like_a_boss;
-
     screen -dRR;
+}
+
+function good_morning_full(){
+    update_everything
+    vpn_like_a_boss;
+    screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
 }
 
 function madeenv() {

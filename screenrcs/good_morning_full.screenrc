@@ -9,6 +9,9 @@ rendition so =06
 rendition so km
 caption string "%{03} "
 
+screen -t "headset_volume_fix" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; headset_volume_fix"
+screen -t "bluejeans" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; bluejeans"
+screen -t "chromium" zsh -c "chromium-browser"
 chdir $PROCUREMENT_PROJECT_DIR
 screen
 split
