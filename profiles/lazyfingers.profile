@@ -48,3 +48,6 @@ function madeenv() {
     export_nomad_addr
 }
 alias madeenv=madeenv;
+
+
+alias o=xdg-open
