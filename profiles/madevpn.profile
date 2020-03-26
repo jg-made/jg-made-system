@@ -32,6 +32,11 @@ function madevpn_kill() {
 }
 alias madevpn_kill=madevpn_kill;
 
+function google_code() {
+    watch -g -n1 $'oathtool --now "$(python -c \'from datetime import datetime, timedelta; print((datetime.now() + timedelta(seconds=30)).strftime("%Y-%m-%d %H:%M:%S %Z"))\' )" --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'
+}
+# I put this comment here because the insane nested quotes cause editor to see rest of file as part of a " string
+
 function madevpn_start() {
     if (sudo screen -ls | grep -q $MADEVPN_SCREEN_NAME)
     then
@@ -99,7 +104,3 @@ function vpn_like_a_boss() {
     zsh ~/.force_domains_through_vpn.sh;
 }
 alias vpn_like_a_boss=vpn_like_a_boss;
-
-function google_code() {
-    watch -g -n1 $'oathtool --now "$(python -c \'from datetime import datetime, timedelta; print((datetime.now() + timedelta(seconds=30)).strftime("%Y-%m-%d %H:%M:%S %Z"))\' )" --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'
-}
