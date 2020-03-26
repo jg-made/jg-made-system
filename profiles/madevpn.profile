@@ -41,7 +41,7 @@ function madevpn_start() {
 
         source <(sudo cat $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile)
 
-        sudo screen -S madevpn_secretkey -d -m zsh -c "source $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile & watch -g -n1 'oathtool --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'";
+        google_code
 
         source $JG_MADE_SYSTEM/auths/unset/madevpn.profile;
 
@@ -72,7 +72,8 @@ function madevpn_start() {
 
         echo "got new secret key. Trying to start $MADEVPN_SCREEN_NAME now"
 
-        sudo screen -S $MADEVPN_SCREEN_NAME -d -m openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf 1>$JG_MADE_SYSTEM/logs/madevpn/output.log 2>$JG_MADE_SYSTEM/logs/madevpn/error.log
+        # sudo openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
+        sudo screen -S $MADEVPN_SCREEN_NAME -Logfile $JG_MADE_SYSTEM/logs/madevpn/output.log -d -m zsh -c "openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf"
 
         # the vpn needs a little time before we check it
         sleep 8
@@ -98,3 +99,7 @@ function vpn_like_a_boss() {
     zsh ~/.force_domains_through_vpn.sh;
 }
 alias vpn_like_a_boss=vpn_like_a_boss;
+
+function google_code() {
+    watch -g -n1 $'oathtool --now "$(python -c \'from datetime import datetime, timedelta; print((datetime.now() + timedelta(seconds=30)).strftime("%Y-%m-%d %H:%M:%S %Z"))\' )" --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'
+}
