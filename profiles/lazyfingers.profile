@@ -27,16 +27,43 @@ function update_everything(){
     update_spacemacs_fork_to_latest_develop;
 }
 
+function ping_github_to_ensure_internet(){
+    ping -c 1 -w 2 -W 2 github.com;
+    if [ $? -eq 0 ];
+    then
+        return 0;
+    else
+        return 1;
+    fi
+}
+
+function boss_sync(){
+    ping_github_to_ensure_internet;
+    if [ $? -eq 0 ];
+    then
+        update_everything
+        vpn_like_a_boss;
+        return 0;
+    else
+        echo "NO INTERNET :("
+        return 1;
+    fi
+}
+
 function good_morning(){
-    update_everything
-    vpn_like_a_boss;
-    screen -dRR;
+    boss_sync;
+    if [ $? -eq 0 ];
+    then
+        screen -dRR;
+    fi
 }
 
 function good_morning_full(){
-    update_everything
-    vpn_like_a_boss;
-    screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
+    boss_sync;
+    if [ $? -eq 0 ];
+    then
+       screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
+    fi
 }
 
 function madeenv() {
