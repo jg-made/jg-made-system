@@ -37,7 +37,7 @@ function ping_github_to_ensure_internet(){
     fi
 }
 
-function boss_sync(){
+function good_morning(){
     ping_github_to_ensure_internet;
     if [ $? -eq 0 ];
     then
@@ -50,16 +50,8 @@ function boss_sync(){
     fi
 }
 
-function good_morning(){
-    boss_sync;
-    if [ $? -eq 0 ];
-    then
-        screen -dRR;
-    fi
-}
-
 function good_morning_full(){
-    boss_sync;
+    good_morning;
     if [ $? -eq 0 ];
     then
        screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
