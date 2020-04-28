@@ -18,6 +18,6 @@ screen
 focus
 chdir $HOME
 screen -t "headset_volume_fix" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; headset_volume_fix"
-screen -t "bluejeans" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; bluejeans"
+screen -t "zoom" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; zoom"
 screen -t "slack" zsh -c "slack"
 screen -t "chromium" zsh -c "chromium-browser"
