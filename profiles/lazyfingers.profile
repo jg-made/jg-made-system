@@ -41,8 +41,8 @@ function good_morning(){
     ping_github_to_ensure_internet;
     if [ $? -eq 0 ];
     then
-        update_everything
-        vpn_like_a_boss;
+        update_everything;
+        emw ~;
         return 0;
     else
         echo "NO INTERNET :("
@@ -54,6 +54,15 @@ function good_morning_full(){
     good_morning;
     if [ $? -eq 0 ];
     then
+       screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
+    fi
+}
+
+function good_morning_full_vpn(){
+    good_morning;
+    if [ $? -eq 0 ];
+    then
+       vpn_like_a_boss;
        screen -c $JG_MADE_SYSTEM/screenrcs/good_morning_full.screenrc
     fi
 }

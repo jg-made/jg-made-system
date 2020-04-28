@@ -8,7 +8,7 @@ function maybe_i_should_stop_using_ubuntu() {
 alias maybe_i_should_stop_using_ubuntu=maybe_i_should_stop_using_ubuntu
 
 function madevpn_check() {
-    if [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" https://portus.made.com) -eq 200 ]
+    if [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" https://toolkit.made.com/) -eq 200 ]
     then
         echo "madevpn is up and running :)";
     else
@@ -87,7 +87,6 @@ function madevpn_start() {
 
         # the tun0 interface might have a different name different machines.
         maybe_i_should_stop_using_ubuntu
-        beep
     fi
 }
 alias madevpn_start=madevpn_start;
@@ -102,5 +101,6 @@ alias madevpn_restart=madevpn_restart;
 function vpn_like_a_boss() {
     madevpn_restart;
     zsh ~/.force_domains_through_vpn.sh;
+    beep;
 }
 alias vpn_like_a_boss=vpn_like_a_boss;
