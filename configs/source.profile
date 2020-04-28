@@ -3,7 +3,6 @@ source $JG_MADE_SYSTEM/profiles/hub.profile
 
 source $JG_MADE_SYSTEM/profiles/alarm.profile
 source $JG_MADE_SYSTEM/profiles/asdf.profile
-source $JG_MADE_SYSTEM/profiles/bluejeans.profile
 source $JG_MADE_SYSTEM/profiles/docker.profile
 source $JG_MADE_SYSTEM/profiles/dns.profile
 source $JG_MADE_SYSTEM/profiles/dvm.profile
