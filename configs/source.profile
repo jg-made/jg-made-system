@@ -46,6 +46,7 @@ source $JG_MADE_SYSTEM/profiles/erp.profile
 source $JG_MADE_SYSTEM/profiles/rip.profile
 source $JG_MADE_SYSTEM/profiles/flexport.profile
 source $JG_MADE_SYSTEM/profiles/aqui.profile
+source $JG_MADE_SYSTEM/profiles/supplier_hub.profile
 
 # PUT LAZYFINGERS LAST
 # Use lazyfingers for the stupid lazy i-hate-both-typing-and-thinking functions

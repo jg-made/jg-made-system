@@ -15,6 +15,7 @@ function update_everything(){
     # get git keychain second
     papiworkon; git fetch --all; cd ~;
     ripworkon; git fetch --all; cd ~;
+    supworkon; git fetch --all; cd ~;
 
     # apt things
     sudo apt update -y;
