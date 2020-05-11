@@ -80,3 +80,4 @@ alias madeenv=madeenv;
 
 
 alias o=xdg-open
+alias b=chromium-browser

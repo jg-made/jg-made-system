@@ -21,3 +21,4 @@ screen -t "headset_volume_fix" zsh -c "source $JG_MADE_SYSTEM/configs/source.pro
 screen -t "zoom" zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; zoom"
 screen -t "slack" zsh -c "slack"
 screen -t "chromium" zsh -c "chromium-browser"
+screen -t "thunderbird" zsh -c "thunderbird"
