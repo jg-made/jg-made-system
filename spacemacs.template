@@ -34,7 +34,8 @@ This function should only modify configuration layer settings."
      nginx
      csv
      sql
-     javascript
+     (javascript :variables
+                 javascript-backend 'tide)
      lsp
      dap
      html
@@ -50,11 +51,15 @@ This function should only modify configuration layer settings."
      better-defaults
      emacs-lisp
      elixir
+     ess
      xclipboard
+     tide
+     (typescript :variables
+                 typescript-backend 'tide)
+     (treemacs :variables treemacs-lock-width t)
      (shell :variables
             shell-default-position 'right)
      (org :variables org-projectile-file "TODOs.org")
-     (treemacs :variables treemacs-lock-width t)
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -79,8 +84,8 @@ This function should only modify configuration layer settings."
      eldoc
      flycheck
      angular-mode
-     solaire-mode
      doom-themes
+     solaire-mode
      exunit
      (flycheck-jest :location elpa)
      (groovy-mode :location elpa)
@@ -184,6 +189,9 @@ It should only modify the values of Spacemacs settings."
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
                          doom-one
+                         doom-acario-dark
+                         doom-moonlight
+                         doom-palenight
                          spacemacs-dark
                          spacemacs-light
                          doom-nord-light
@@ -193,15 +201,15 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Input Mono"
-   ;;                             :size 16
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1.1)
-   dotspacemacs-default-font '("Noto Mono"
-                               :size 16
+   dotspacemacs-default-font '("Ubuntu Mono"
+                               :size 21
                                :weight normal
                                :width normal)
+   ;; :powerline-scale 1.1)
+   ;; dotspacemacs-default-font '("Noto Mono"
+   ;; :size 19
+   ;; :weight normal
+   ;; :width normal)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -345,7 +353,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("rg", "ag" "pt" "ack" "grep")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -407,7 +415,7 @@ you should place your code here."
           '(".idea" ".ensime_cache" ".eunit" "node_modules"
             ".git" ".hg" ".fslckout" "_FOSSIL_"
             ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
-            "build" "_build" "deps")
+            "build" "_build" "deps" "postgres-data")
           )
     (add-to-list 'exec-path "~/gitBits/elixir-ls/release/"))
 
@@ -437,7 +445,9 @@ you should place your code here."
       (setq mode-line-format nil)))
 
   (use-package company-lsp
-    :init (setq company-lsp-cache-candidates 'auto))
+    :init (setq company-lsp-cache-candidates 'auto)
+    :config (push 'company-lsp company-backends)
+    )
   ;; this doesn't work:
   ;; (add-hook 'projectile-after-switch-project-hook #'lsp-restart-workspace)
 
@@ -468,8 +478,9 @@ you should place your code here."
 
   ;; "PYTHON STUFF"
   ;; you just need to install these things into your env:
-  ;; pip install --upgrade pyls-mypy pyls-isort python-language-server jedi
+  ;; pip install pyls pyls-mypy pyls-isort python-language-server[all] ipython ipdb proselint grip pdbpp importmagic
   (spacemacs/set-leader-keys-for-major-mode 'python-mode "g g" 'lsp-find-definition)
+  (spacemacs/set-leader-keys-for-major-mode 'python-mode "g u" 'lsp-find-references)
 
   ;; ANSIBLE STUFF
   ;; "Open html files in jinja2 mode by default"
@@ -492,7 +503,7 @@ you should place your code here."
 
   ;; DOOM STUFF
   (use-package doom-themes
-    :init (load-theme 'doom-one t)
+    ;; :init (load-theme 'doom-one t)
     :config
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -501,12 +512,13 @@ you should place your code here."
     (doom-themes-org-config)
 
     ;; Enable custom treemacs theme (all-the-icons must be installed! - use M-x all-the-icons-install-fonts)
-    (doom-themes-treemacs-config))
+    ;; (doom-themes-treemacs-config))
+    )
   (setq doom-enable-bold t    ; if nil, bolding are universally disabled
         doom-enable-italic t  ; if nil, italics are universally disabled
 
         ;; doom-one specific settings
-        doom-one-brighter-modeline t
+        doom-one-brighter-modeline nil
         doom-one-brighter-comments nil)
 
   ;; SOLAIRE MODE STUFF
@@ -529,52 +541,70 @@ you should place your code here."
 
   ;; DEFAULT INDENTATION - 2 spaces
   (setq js-indent-level 2)
+  (setq javascript-indent-level 2)
 
-  ;; ;; "REACT JS STUFF"
-  ;; (defun setup-tide-mode ()
-  ;;   (interactive)
-  ;;   (tide-setup)
-  ;;   (flycheck-mode +1)
-  ;;   (flycheck-jest-setup)
-  ;;   ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  ;;   (eldoc-mode +1)
-  ;;   (tide-hl-identifier-mode +1)
-  ;;   (company-mode +1))
-  ;; (add-hook 'rjsx-mode-hook #'setup-tide-mode)
-  ;; (add-hook 'web-mode-hook #'setup-tide-mode)
-  ;; "Open js files in rjsx mode by default"
-  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-  ;; (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "g g" 'tide-jump-to-definition)
-  ;; (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "h h" 'tide-documentation-at-point)
-  ;; ;; aligns annotation to the right hand side
-  ;; ;; (setq company-tooltip-align-annotations t)
-  ;; ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-  ;; ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
+  ;; ;; ;; "NODE JS NVM REPL SHELL STUFF"
+  ;; (require 'nodejs-repl)
+  ;; (defun nvm-which ()
+  ;;   (let* ((shell (concat (getenv "SHELL") " -l -c 'nvm which'"))
+  ;;          (output (shell-command-to-string shell)))
+  ;;     (cadr (split-string output "[\n]+" t))))
+  ;; (setq nodejs-repl-command #'nvm-which)
 
-  ;; ;; "ANGULAR JS STUFF"
+  ;; "REACT JS STUFF"
   (defun setup-tide-mode ()
     (interactive)
     (tide-setup)
     (flycheck-mode +1)
+    (flycheck-jest-setup)
+    ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
     (eldoc-mode +1)
     (tide-hl-identifier-mode +1)
     (company-mode +1))
-  (add-hook 'angular-mode-hook #'setup-tide-mode)
-  ;; (add-hook 'angular-mode-hook (lambda() (display-line-numbers-mode 1)))
+  (add-hook 'rjsx-mode-hook #'setup-tide-mode)
   (add-hook 'web-mode-hook #'setup-tide-mode)
-  ;; "Open js files in angular mode by default"
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . angular-mode))
-  (add-to-list 'auto-mode-alist '("\\.html\\'" . angular-html-mode))
-  (spacemacs/set-leader-keys-for-major-mode 'angular-mode "g g" 'tide-jump-to-definition)
-  (spacemacs/set-leader-keys-for-major-mode 'angular-mode "h h" 'tide-documentation-at-point)
-  ;; ;; aligns annotation to the right hand side
-  ;; ;; (setq company-tooltip-align-annotations t)
-  ;; ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
-  ;; ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
+  "Open js files in rjsx mode by default"
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+  (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "g g" 'tide-jump-to-definition)
+  (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "h h" 'tide-documentation-at-point)
+  ;; aligns annotation to the right hand side
+  ;; (setq company-tooltip-align-annotations t)
+  ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
+
+  ;; ;; ;; "ANGULAR JS STUFF"
+  ;; (defun setup-tide-mode ()
+  ;;   (interactive)
+  ;;   (tide-setup)
+  ;;   (flycheck-mode +1)
+  ;;   (eldoc-mode +1)
+  ;;   (tide-hl-identifier-mode +1)
+  ;;   (company-mode +1))
+  ;; (add-hook 'angular-mode-hook #'setup-tide-mode)
+  ;; ;; (add-hook 'angular-mode-hook (lambda() (display-line-numbers-mode 1)))
+  ;; (add-hook 'web-mode-hook #'setup-tide-mode)
+  ;; ;; "Open js files in angular mode by default"
+  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . angular-mode))
+  ;; (add-to-list 'auto-mode-alist '("\\.html\\'" . angular-html-mode))
+  ;; (spacemacs/set-leader-keys-for-major-mode 'angular-mode "g g" 'tide-jump-to-definition)
+  ;; (spacemacs/set-leader-keys-for-major-mode 'angular-mode "h h" 'tide-documentation-at-point)
+  ;; ;; ;; aligns annotation to the right hand side
+  ;; ;; ;; (setq company-tooltip-align-annotations t)
+  ;; ;; ;; (flycheck-add-mode 'javascript-eslint 'web-mode)
+  ;; ;; ;; (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
 
 
   ;; ;; "ORG MODE STUFF"
   (add-hook 'org-mode-hook (lambda()
                              ;; flycheck for org uses proselint which is heavy on the cpu
                              (flycheck-mode 0)))
+
+  ;; ;; "PICKLE GHERKIN CUCUMBER STUFF"
+  ;; (load-file "~/.emacs.d/private/pickle.el")
+
+  ;; magit-diff stuff
+  (defun setup-magit-mode ()
+    (define-key magit-diff-mode-map (kbd "RET") 'magit-diff-visit-file-other-window))
+  (add-hook 'magit-diff-mode-hook #'setup-magit-mode)
+
   )
