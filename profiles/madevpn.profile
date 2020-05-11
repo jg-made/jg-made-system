@@ -33,7 +33,7 @@ function madevpn_kill() {
 alias madevpn_kill=madevpn_kill;
 
 function google_code() {
-    watch -g -n1 $'oathtool --now "$(python -c \'from datetime import datetime, timedelta; print((datetime.now() + timedelta(seconds=60)).strftime("%Y-%m-%d %H:%M:%S %Z"))\' )" --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'
+    watch -g -n1 $'oathtool --now "$(python -c \'from datetime import datetime, timedelta; print((datetime.now() + timedelta(seconds=0)).strftime("%Y-%m-%d %H:%M:%S %Z"))\' )" --totp -b $MADEVPN_GOOGLE_CODE | sudo tee $JG_MADE_SYSTEM/auths/madevpn/.secret_key'
 }
 # I put this comment here because the insane nested quotes cause editor to see rest of file as part of a " string
 
