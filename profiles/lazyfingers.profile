@@ -1,3 +1,6 @@
+alias o=xdg-open
+alias b=chromium-browser
+
 function update_spacemacs_fork_to_latest_develop(){
     cd ~/.emacs.d;
     git checkout develop;
@@ -79,5 +82,3 @@ function madeenv() {
 alias madeenv=madeenv;
 
 
-alias o=xdg-open
-alias b=chromium-browser
