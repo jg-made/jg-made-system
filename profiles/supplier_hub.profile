@@ -6,3 +6,8 @@ function supworkon() {
     cd $SUP_PROJECT_DIR
 }
 alias supworkon=supworkon
+
+function supdb_local() {
+    pgcli postgres://supplier_hub:supplier_hub_password@localhost:5432
+}
+alias supdb_local=supdb_local
