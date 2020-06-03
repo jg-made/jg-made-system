@@ -77,16 +77,16 @@ function madevpn_start() {
 
         echo "got new secret key. Trying to start $MADEVPN_SCREEN_NAME now"
 
-        sudo openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
-        # sudo screen -S $MADEVPN_SCREEN_NAME -Logfile $JG_MADE_SYSTEM/logs/madevpn/output.log -d -m zsh -c "openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf"
+        # sudo openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf
+        sudo screen -S $MADEVPN_SCREEN_NAME -Logfile $JG_MADE_SYSTEM/logs/madevpn/output.log -d -m zsh -c "openvpn --config $JG_MADE_SYSTEM/auths/madevpn/Linux-AWS-VPN.conf"
 
-        # # the vpn needs a little time before we check it
-        # sleep 8
-        # madevpn_check
-        # sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
+        # the vpn needs a little time before we check it
+        sleep 8
+        madevpn_check
+        sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
 
-        # # the tun0 interface might have a different name different machines.
-        # maybe_i_should_stop_using_ubuntu
+        # the tun0 interface might have a different name different machines.
+        maybe_i_should_stop_using_ubuntu
 
     fi
 }
