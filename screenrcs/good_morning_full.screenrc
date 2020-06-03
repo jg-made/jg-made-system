@@ -15,8 +15,9 @@ screen -t "zoom" 3 zsh -c "source $JG_MADE_SYSTEM/configs/source.profile; zoom"
 screen -t "slack" 4 zsh -c "slack"
 screen -t "chromium" 5 zsh -c "chromium-browser"
 screen -t "thunderbird" 6 zsh -c "thunderbird"
+screen -t "firefox" 7 zsh -c "firefox"
 
-chdir $PROCUREMENT_PROJECT_DIR
+chdir $SUP_PROJECT_DIR
 screen
 split
 focus
