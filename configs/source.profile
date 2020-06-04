@@ -13,6 +13,7 @@ source $JG_MADE_SYSTEM/profiles/git.profile
 source $JG_MADE_SYSTEM/profiles/iex.profile
 source $JG_MADE_SYSTEM/profiles/image.profile
 source $JG_MADE_SYSTEM/profiles/locale.profile
+source $JG_MADE_SYSTEM/profiles/mouse.profile
 source $JG_MADE_SYSTEM/profiles/nvm.profile
 source $JG_MADE_SYSTEM/profiles/pgcli.profile
 source $JG_MADE_SYSTEM/profiles/postman.profile
