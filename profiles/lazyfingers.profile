@@ -24,6 +24,12 @@ function update_everything(){
     sudo apt update -y;
     sudo apt upgrade -y;
 
+    # git-pulled libs/tools
+    cd ~/.pyenv && gfa && gl;
+    cd ~/.pyenv/plugins/pyenv-virtualenv && gfa && gl;
+    cd ~/.asdf && gfa && gl;
+    cd ~/.oh-my-zsh && gfa && gl;
+
     # update asdf things
     asdf update;
     asdf plugin-update --all;
