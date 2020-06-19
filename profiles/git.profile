@@ -1,19 +1,19 @@
 function gc_commit_message() {
-  # quick and dirty add/commit
-  git add .;
-  vim .gc_commit_message;
-  if [ $# -eq 1 ]
-  then
-    GIT_COMMITTER_DATE=$1 git commit --date=$1 -a -F .gc_commit_message;
-  else
-    git commit -a -F .gc_commit_message;
-  fi
+    # quick and dirty add/commit
+    git add .;
+    vim .gc_commit_message;
+    if [ $# -eq 1 ]
+    then
+        GIT_COMMITTER_DATE=$1 git commit --date=$1 -a -F .gc_commit_message;
+    else
+        git commit -a -F .gc_commit_message;
+    fi
 }
 alias gc_commit_message=gc_commit_message;
 
 function git_prune_local() {
-  # get rid of local branches that used to track now-dead remotes
-  git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D;
+    # get rid of local branches that used to track now-dead remotes
+    git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D;
 }
 alias git_prune_local=git_prune_local;
 
