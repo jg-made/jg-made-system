@@ -45,3 +45,14 @@ function gdcolorwords() {
 alias gdcolorwords=gdcolorwords;
 
 alias gba='git branch --all --sort=-committerdate'
+
+
+function merge-pr() {
+    # https://developer.github.com/v3/pulls/#merge-a-pull-request-merge-button
+    local ID=$1
+    local REPO=$2
+    shift 2
+    local URL="repos/madedotcom/$REPO/pulls/$ID/merge"
+    echo $URL
+    /snap/bin/hub api -XPUT $URL -f merge_method=squash
+}
