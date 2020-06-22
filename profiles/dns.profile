@@ -1,11 +1,16 @@
 function dns() {
+    echo "Clearing DNS in a bunch of different ways..."
     # run this command to flush dns cache:
+    echo "sudo /etc/init.d/dns-clean restart"
     sudo /etc/init.d/dns-clean restart
     # or use:
+    echo "sudo /etc/init.d/networking force-reload"
     sudo /etc/init.d/networking force-reload
     # Flush nscd dns cache:
+    echo "sudo /etc/init.d/nscd restart"
     sudo /etc/init.d/nscd restart
     # If you wanted to refresh your settings you could disable and then run
+    echo "sudo service network-manager restart"
     sudo service network-manager restart
 }
 

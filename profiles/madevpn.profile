@@ -42,6 +42,7 @@ function madevpn_start() {
     then
         echo "madevpn already running...";
     else
+        dns
         echo "please wait up to 30 seconds for secret key to change..."
 
         source <(sudo cat $JG_MADE_SYSTEM/auths/madevpn/madevpn.profile)
@@ -85,8 +86,8 @@ function madevpn_start() {
         madevpn_check
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
 
-        # the tun0 interface might have a different name different machines.
-        maybe_i_should_stop_using_ubuntu
+        # # the tun0 interface might have a different name different machines.
+        # maybe_i_should_stop_using_ubuntu
 
     fi
 }
