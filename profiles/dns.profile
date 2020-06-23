@@ -10,8 +10,8 @@ function dns() {
     echo "sudo /etc/init.d/nscd restart"
     sudo /etc/init.d/nscd restart
     # If you wanted to refresh your settings you could disable and then run
-    echo "sudo service network-manager restart"
-    sudo service network-manager restart
+    # echo "sudo service network-manager restart"
+    # sudo service network-manager restart
 }
 
 function force_domain_through_vpn() {
