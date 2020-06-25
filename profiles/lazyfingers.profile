@@ -31,7 +31,7 @@ function update_everything(){
     cd ~/.oh-my-zsh && gfa && gl;
 
     # update asdf things
-    asdf update;
+    asdf update --head;
     asdf plugin-update --all;
 
     update_spacemacs_fork_to_latest_develop;
