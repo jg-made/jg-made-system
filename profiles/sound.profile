@@ -18,6 +18,7 @@ function headset_volume_fix() {
 function headset_mute() {
     while true;
     do
+        amixer -c 0 set 'Internal Mic Boost' 0db > /dev/null;
         amixer -c 0 set 'Headset Mic Boost' 0db > /dev/null;
         amixer -c 0 set 'Capture' 0db > /dev/null;
         sleep 0.1

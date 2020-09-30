@@ -1,5 +1,6 @@
 alias o=xdg-open
 alias b=chromium-browser
+alias s="screen -dRR"
 
 function update_spacemacs_fork_to_latest_develop(){
     cd ~/.emacs.d;

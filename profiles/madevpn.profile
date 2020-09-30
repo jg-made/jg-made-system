@@ -2,10 +2,10 @@ source $JG_MADE_SYSTEM/auths/unset/madevpn.profile;
 
 export MADEVPN_SCREEN_NAME=madevpn;
 
-function maybe_i_should_stop_using_ubuntu() {
+function resolve_consul() {
     sudo resolvectl domain tun0 consul
 }
-alias maybe_i_should_stop_using_ubuntu=maybe_i_should_stop_using_ubuntu
+alias resolve_consul=resolve_consul
 
 function madevpn_check() {
     if [ $(curl -m 10 -s -o /dev/null -w "%{http_code}" https://toolkit.made.com/) -eq 200 ]
@@ -87,7 +87,7 @@ function madevpn_start() {
         sudo rm -f $JG_MADE_SYSTEM/auths/madevpn/.secret-auth.txt;
 
         # # the tun0 interface might have a different name different machines.
-        # maybe_i_should_stop_using_ubuntu
+        resolve_consul
 
     fi
 }
